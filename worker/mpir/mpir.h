@@ -6,13 +6,19 @@
 #if defined (__cplusplus)
 extern "C" {
 #endif // __cplusplus
-#include "gmp_impl.h"
 //compile language defines
 #define __mpir_const const
+
 //compile data type defines
 #define _LONG_LONG_LIMB	1  //x64 SYSTEM sign
+#define __GMP_DECLSPEC_G_VALUE //the DeclSpec for Global Value
 typedef unsigned long long int	mp_limb_t;
 typedef long long int		mp_limb_signed_t;
+
+/* definition to expand macro then apply to pragma message */
+#define VALUE_TO_STRING(x) #x
+#define VALUE(x) VALUE_TO_STRING(x)
+#define VAR_NAME_VALUE(var) #var "="  VALUE(var)
 
 #define __GMP_BITS_PER_MP_LIMB             64
 #define GMP_LIMB_BITS                      64
@@ -29,6 +35,7 @@ typedef __mpir_const mp_limb_t *	mp_srcptr;
 typedef struct {mp_limb_t inv32;} gmp_pi1_t;
 typedef struct {mp_limb_t inv21, inv32, inv53;} gmp_pi2_t;
 
+#include "gmp_impl.h"
 #define GMP_UI_MAX          ((mpir_ui)(~(mpir_ui)0))
 #define GMP_UI_HIBIT        (GMP_UI_MAX ^ (GMP_UI_MAX >> 1))
 #define GMP_SI_MAX          ((mpir_si)(GMP_UI_MAX ^ GMP_UI_HIBIT))
@@ -80,12 +87,14 @@ typedef struct
   mp_limb_t _mp_d[MPIR_MAX_LIMB_SIZE];		/* Pointer to the limbs.  */
 } __mpf_struct;
 typedef __mpf_struct *mpf_ptr;
+typedef __mpir_const __mpf_struct *	mpf_srcptr;
 typedef __mpf_struct mpf_t[1];
 
 
 void mpf_init (mpf_ptr r);
 void mpf_clear (mpf_ptr m);
-void mpf_set_d (mpf_ptr r, double d);
+void mpf_set_d(mpf_ptr r, double d);
+double mpf_get_d(mpf_srcptr src);
 
 int IsCUDA_Supported(int bPrintInfoToConsole);
 #if defined (__cplusplus)
