@@ -35,6 +35,14 @@
 #ifdef HAVE_STDINT_H
 #define BITS_PER_UINTMAX (8 * SIZEOF_UINTMAX_T)
 #endif
+#ifdef _MSC_VER
+#ifdef _WIN64
+typedef unsigned int uint_least32_t;
+#else
+typedef unsigned int uint_least32_t;
+#endif // _WIN64
+#endif // _MSC_VER
+
 
 /* gmp_uint_least32_t is an unsigned integer type with at least 32 bits. */
 #if HAVE_UINT_LEAST32_T
