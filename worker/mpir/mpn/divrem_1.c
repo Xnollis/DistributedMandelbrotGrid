@@ -61,8 +61,6 @@ const unsigned char  modlimb_invert_table[128] = {
 };
 
 
-mp_limb_t mpn_divrem_euclidean_qr_1(mp_ptr qp, mp_size_t qxn, mp_srcptr xp, mp_size_t n, mp_limb_t d);
-mp_limb_t mpn_divrem_euclidean_r_1(mp_srcptr xp, mp_size_t n, mp_limb_t d);
 /***************************************************************/
 
 /* set to 1 = store or 0 = not store */

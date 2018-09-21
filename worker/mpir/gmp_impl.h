@@ -53,6 +53,9 @@ __GMP_DECLSPEC void __gmp_invalid_operation  (void) ;
 #define __GMP_UNLIKELY(cond)  (cond)
 #endif
 
+#ifndef WANT_TMP_DEBUG  /* for TMP_ALLOC_LIMBS_2 and others */
+#define WANT_TMP_DEBUG 0
+#endif
 
 
 
@@ -352,6 +355,8 @@ sq_res_0x100[4] = {
 
 /////////////////////////////////////////////////////////////
 #define ASSERT(expr)
+#define ASSERT_ALWAYS(expr)
+#define ASSERT_FAIL(expr)
 #define ASSERT_LIMB(limb)       do {} while (0)
 #define ASSERT_MPN(ptr, size)   do {} while (0)
 #define ASSERT_CARRY(expr)     (expr)
@@ -574,10 +579,41 @@ __src--;                                        \
 #define TMP_SDECL TMP_DECL
 #define TMP_SMARK TMP_MARK
 #define TMP_SFREE TMP_FREE
+/* Allocating various types. */
+#define TMP_ALLOC_TYPE(n,type)  ((type *) TMP_ALLOC ((n) * sizeof (type)))
+#define TMP_SALLOC_TYPE(n,type) ((type *) TMP_SALLOC ((n) * sizeof (type)))
+#define TMP_BALLOC_TYPE(n,type) ((type *) TMP_BALLOC ((n) * sizeof (type)))
+#define TMP_ALLOC_LIMBS(n)      TMP_ALLOC_TYPE(n,mp_limb_t)
+#define TMP_SALLOC_LIMBS(n)     TMP_SALLOC_TYPE(n,mp_limb_t)
+#define TMP_BALLOC_LIMBS(n)     TMP_BALLOC_TYPE(n,mp_limb_t)
+#define TMP_ALLOC_MP_PTRS(n)    TMP_ALLOC_TYPE(n,mp_ptr)
+#define TMP_SALLOC_MP_PTRS(n)   TMP_SALLOC_TYPE(n,mp_ptr)
+#define TMP_BALLOC_MP_PTRS(n)   TMP_BALLOC_TYPE(n,mp_ptr)
 void *TMP_ALLOC_FUNC(size_t n,char pLocalBuf[TMP_ALLOC_LOCAL_BUF_SIZE],size_t *pCnt);
 #endif
 
 
+/* Enhancement: __gmp_allocate_func could have "__attribute__ ((malloc))",
+but current gcc (3.0) doesn't seem to support that.  */
+__GMP_DECLSPEC extern void * (*__gmp_allocate_func) (size_t);
+__GMP_DECLSPEC extern void * (*__gmp_reallocate_func) (void *, size_t, size_t);
+__GMP_DECLSPEC extern void(*__gmp_free_func) (void *, size_t);
+
+__GMP_DECLSPEC void *__gmp_default_allocate (size_t);
+__GMP_DECLSPEC void *__gmp_default_reallocate (void *, size_t, size_t);
+__GMP_DECLSPEC void __gmp_default_free (void *, size_t);
+
+#define __GMP_ALLOCATE_FUNC_TYPE(n,type) \
+  ((type *) (*__gmp_allocate_func) ((n) * sizeof (type)))
+#define __GMP_ALLOCATE_FUNC_LIMBS(n)   __GMP_ALLOCATE_FUNC_TYPE (n, mp_limb_t)
+
+#define __GMP_REALLOCATE_FUNC_TYPE(p, old_size, new_size, type) \
+  ((type *) (*__gmp_reallocate_func)                            \
+   (p, (old_size) * sizeof (type), (new_size) * sizeof (type)))
+#define __GMP_REALLOCATE_FUNC_LIMBS(p, old_size, new_size) \
+  __GMP_REALLOCATE_FUNC_TYPE(p, old_size, new_size, mp_limb_t)
+#define __GMP_FREE_FUNC_TYPE(p,n,type) (*__gmp_free_func) (p, (n) * sizeof (type))
+#define __GMP_FREE_FUNC_LIMBS(p,n)     __GMP_FREE_FUNC_TYPE (p, n, mp_limb_t)
 
 
 #endif//__GMP_IMPL_H__

@@ -176,7 +176,8 @@ MA 02110-1301, USA.
 #define HAVE_MPROTECT 1
 
 /* Define to 1 each of the following for which a native (ie. CPU specific)
-    implementation of the corresponding routine exists.  */
+	implementation of the corresponding routine exists.  */
+#ifndef _MSC_VER
 #define HAVE_NATIVE_mpn_add_n 1
 #define HAVE_NATIVE_mpn_add_nc 1
 /* #undef HAVE_NATIVE_mpn_addadd_n */
@@ -223,11 +224,13 @@ MA 02110-1301, USA.
 /* #undef HAVE_NATIVE_mpn_invert_limb */
 #define HAVE_NATIVE_mpn_ior_n 1
 #define HAVE_NATIVE_mpn_iorn_n 1
+
 #define HAVE_NATIVE_mpn_karaadd 1
 #define HAVE_NATIVE_mpn_karasub 1
 #define HAVE_NATIVE_mpn_lshift1 1
 #define HAVE_NATIVE_mpn_lshift2 1
 #define HAVE_NATIVE_mpn_lshiftc 1
+
 /* #undef HAVE_NATIVE_mpn_mod_1 */
 #define HAVE_NATIVE_mpn_mod_1_1 1
 #define HAVE_NATIVE_mpn_mod_1_2 1
@@ -267,6 +270,7 @@ MA 02110-1301, USA.
 /* #undef HAVE_NATIVE_mpn_udiv_qrnnd_r */
 #define HAVE_NATIVE_mpn_xor_n 1
 #define HAVE_NATIVE_mpn_xnor_n 1
+#endif // _MSC_VER
 
 /* Define to 1 if you have the `nl_langinfo' function. */
 #define HAVE_NL_LANGINFO 1

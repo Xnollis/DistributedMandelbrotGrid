@@ -76,6 +76,68 @@ double mpf_get_d_2exp (mp_exp_t *exp2, mpf_srcptr src)
   return mpn_get_d (ptr, abs_size, size,
                     (long) - (abs_size * GMP_NUMB_BITS - cnt));
 }
+void mpf_mul(mpf_ptr r, mpf_srcptr u, mpf_srcptr v)
+{
+	mp_srcptr up, vp;
+	mp_size_t usize, vsize;
+	mp_size_t sign_product;
+	mp_size_t prec = r->_mp_prec;
+	TMP_DECL;
+
+	TMP_MARK;
+	usize = u->_mp_size;
+	vsize = v->_mp_size;
+	sign_product = usize ^ vsize;
+
+	usize = ABS(usize);
+	vsize = ABS(vsize);
+
+	up = u->_mp_d;
+	vp = v->_mp_d;
+	if (usize > prec)
+	{
+		up += usize - prec;
+		usize = prec;
+	}
+	if (vsize > prec)
+	{
+		vp += vsize - prec;
+		vsize = prec;
+	}
+
+	if (usize == 0 || vsize == 0)
+	{
+		r->_mp_size = 0;
+		r->_mp_exp = 0;		/* ??? */
+	}
+	else
+	{
+		mp_size_t rsize;
+		mp_limb_t cy_limb;
+		mp_ptr rp, tp;
+		mp_size_t adj;
+
+		rsize = usize + vsize;
+		tp = (mp_ptr)TMP_ALLOC(rsize * BYTES_PER_MP_LIMB);
+		cy_limb = (usize >= vsize
+			? mpn_mul(tp, up, usize, vp, vsize)
+			: mpn_mul(tp, vp, vsize, up, usize));
+
+		adj = cy_limb == 0;
+		rsize -= adj;
+		prec++;
+		if (rsize > prec)
+		{
+			tp += rsize - prec;
+			rsize = prec;
+		}
+		rp = r->_mp_d;
+		MPN_COPY(rp, tp, rsize);
+		r->_mp_exp = u->_mp_exp + v->_mp_exp - adj;
+		r->_mp_size = sign_product >= 0 ? rsize : -rsize;
+	}
+	TMP_FREE;
+}
 void mpf_mul_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v)
 {
 	mp_srcptr up;

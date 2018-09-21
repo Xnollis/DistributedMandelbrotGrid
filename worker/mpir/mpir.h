@@ -15,6 +15,7 @@ extern "C" {
 #define __GMP_DECLSPEC_G_VALUE //the DeclSpec for Global Value
 #define __GMP_EXTERN_INLINE extern inline
 #define __GMP_NOTHROW
+#define ATTRIBUTE_CONST
 typedef unsigned long long int	mp_limb_t;
 typedef long long int		mp_limb_signed_t;
 
@@ -110,7 +111,9 @@ double mpf_get_d_2exp (mp_exp_t *exp2, mpf_srcptr src);
 void mpf_mul_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v);
 void mpf_div_ui (mpf_ptr r, mpf_srcptr u, mpir_ui v);
 void mpf_add (mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
-void mpf_sub (mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
+void mpf_sub(mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
+void mpf_mul(mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
+void mpf_div(mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
 
 int IsCUDA_Supported(int bPrintInfoToConsole);
 #if defined (__cplusplus)
