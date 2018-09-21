@@ -77,7 +77,7 @@ void
 mpn_toom3_mul_n (mp_ptr c, mp_srcptr a, mp_srcptr b, mp_size_t n, mp_ptr t)
 {
   mp_size_t k, k1, kk1, r, twok, rr2;
-  mp_limb_t cy, cc, saved, vinf0;
+  mp_limb_t saved, vinf0;
   mp_ptr trec;
   int sa, sb;
   mp_ptr c1, c2, c3, c4, c5, t1, t2, t3, t4;
@@ -251,7 +251,7 @@ void
 mpn_toom3_sqr_n (mp_ptr c, mp_srcptr a, mp_size_t n, mp_ptr t)
 {
   mp_size_t k, k1, kk1, r, twok, rr2;
-  mp_limb_t cy, cc, saved, vinf0;
+  mp_limb_t cy, saved, vinf0;
   mp_ptr trec;
   int sa;
   mp_ptr c1, c2, c3, c4, c5, t1, t2, t3, t4;

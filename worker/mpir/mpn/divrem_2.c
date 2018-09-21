@@ -191,7 +191,7 @@ mp_limb_t dinv)
 	mp_size_t i;
 	mp_limb_t n1, n0;
 	mp_limb_t d1, d0;
-	mp_limb_t cy, cy1, cy2;
+	mp_limb_t cy, cy2;
 	mp_limb_t q;
 
 	ASSERT(dn > 2);
@@ -632,7 +632,7 @@ mpn_inv_div_qr_n(mp_ptr qp, mp_ptr np,
 mp_srcptr dp, mp_size_t dn, mp_srcptr inv)
 {
 	mp_limb_t cy, lo, ret = 0, ret2 = 0;
-	mp_size_t m, i;
+	mp_size_t m;
 	mp_ptr tp;
 	TMP_DECL;
 

@@ -35,7 +35,6 @@ int
 mpn_is_invert (mp_srcptr xp, mp_srcptr ap, mp_size_t n)
 {
   int res = 1;
-  mp_size_t i;
   mp_ptr tp, up;
   mp_limb_t cy;
   TMP_DECL;
@@ -125,7 +124,7 @@ mpn_invert (mp_ptr xp, mp_srcptr ap, mp_size_t n)
     {
       mp_size_t l, h;
       mp_ptr tp, up;
-      mp_limb_t cy, th;
+      mp_limb_t cy;
       TMP_DECL;
 
       l = (n - 1) / 2;
@@ -145,7 +144,6 @@ mpn_invert (mp_ptr xp, mp_srcptr ap, mp_size_t n)
       else
 	{
           mp_size_t m = n + 1;
-          mpir_ui k;
           int cc;
 		  cy = 0;
 #if WANT_FFT
@@ -217,7 +215,6 @@ mpn_invert (mp_ptr xp, mp_srcptr ap, mp_size_t n)
 void mpn_invert_trunc(mp_ptr x_new, mp_size_t m, mp_srcptr xp, mp_size_t n, mp_srcptr ap)
 {
   mp_ptr tp;
-  mp_limb_t cy;
   TMP_DECL;
 
   TMP_MARK;
