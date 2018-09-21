@@ -24,12 +24,12 @@ int main()
     d4 = mpf_get_d(f4);
     mpf_div_ui(f4,f3,10);//f4=f3/10;135.8016
     d4 = mpf_get_d(f4);
-    /*mpir_si ee;
+    mp_exp_t ee;
     mpf_get_d_2exp(&ee, f4);
     mpf_set_d(f1,10.0);
-    mpf_div(f5,f4,f1);// f5=f4/f1;13.58016
+    /*mpf_div(f5,f4,f1);// f5=f4/f1;13.58016
     gmp_sprintf(sBuf,"\n%Ff,%ld\n",f5,ee);*/
-    printf("%s",sBuf);
+    printf("%ld %f %s\n",ee,d4,sBuf);
     mpf_clear(f1);
 
     //i=IsCUDA_Supported(1);

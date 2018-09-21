@@ -41,7 +41,7 @@ void mpf_set_d (mpf_ptr r, double d)
 double mpf_get_d(mpf_srcptr src)
 {
 	mp_size_t  size, abs_size;
-	long       exp;
+	mp_exp_t       exp;
 
 	size = SIZ(src);
 	if (UNLIKELY(size == 0))
@@ -50,6 +50,31 @@ double mpf_get_d(mpf_srcptr src)
 	abs_size = ABS(size);
 	exp = (EXP(src) - abs_size) * GMP_NUMB_BITS;
 	return mpn_get_d(PTR(src), abs_size, size, exp);//32-bit, 参数总大小应该是10h字节，但是现在由于有64位的参数，总大小变为18h了 《---由于注释这里有中文，会导致无法编译通过
+}
+double mpf_get_d_2exp (mp_exp_t *exp2, mpf_srcptr src)
+{
+  mp_size_t size, abs_size;
+  mp_srcptr ptr;
+  int cnt;
+  mp_exp_t exp;
+
+  size = SIZ(src);
+  if (UNLIKELY (size == 0))
+    {
+      *exp2 = 0;
+      return 0.0;
+    }
+
+  ptr = PTR(src);
+  abs_size = ABS (size);
+  count_leading_zeros (cnt, ptr[abs_size - 1]);
+  cnt -= GMP_NAIL_BITS;
+
+  exp = EXP(src) * GMP_NUMB_BITS - cnt;
+  *exp2 = exp;
+
+  return mpn_get_d (ptr, abs_size, size,
+                    (long) - (abs_size * GMP_NUMB_BITS - cnt));
 }
 void mpf_mul_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v)
 {
