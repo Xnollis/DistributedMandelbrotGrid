@@ -40,7 +40,7 @@ mpn_mul_1 (mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
   do
     {
       ul = *up++;
-     // umul_ppmm (hpl, lpl, ul, vl);
+      umul_ppmm (hpl, lpl, ul, vl);
 
       lpl += cl;
       cl = (lpl < cl) + hpl;

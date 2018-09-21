@@ -11,7 +11,10 @@ extern "C" {
 
 //compile data type defines
 #define _LONG_LONG_LIMB	1  //x64 SYSTEM sign
+#define __GMP_DECLSPEC
 #define __GMP_DECLSPEC_G_VALUE //the DeclSpec for Global Value
+#define __GMP_EXTERN_INLINE extern inline
+#define __GMP_NOTHROW
 typedef unsigned long long int	mp_limb_t;
 typedef long long int		mp_limb_signed_t;
 
@@ -20,6 +23,7 @@ typedef long long int		mp_limb_signed_t;
 #define VALUE(x) VALUE_TO_STRING(x)
 #define VAR_NAME_VALUE(var) #var "="  VALUE(var)
 
+#define MPIR_MAX_LIMB_SIZE 300
 #define __GMP_BITS_PER_MP_LIMB             64
 #define GMP_LIMB_BITS                      64
 #define GMP_NAIL_BITS                      0
@@ -34,6 +38,12 @@ typedef __mpir_const mp_limb_t *	mp_srcptr;
 /* pre-inverse types for truncating division and modulo */
 typedef struct {mp_limb_t inv32;} gmp_pi1_t;
 typedef struct {mp_limb_t inv21, inv32, inv53;} gmp_pi2_t;
+#define __GMP_HAVE_PROTOTYPES 1
+#if __GMP_HAVE_PROTOTYPES
+#define __GMP_PROTO(x) x
+#else
+#define __GMP_PROTO(x) ()
+#endif
 
 #include "gmp_impl.h"
 #define GMP_UI_MAX          ((mpir_ui)(~(mpir_ui)0))
@@ -73,7 +83,6 @@ typedef struct {mp_limb_t inv21, inv32, inv53;} gmp_pi2_t;
 #define UNLIKELY(cond)                 __GMP_UNLIKELY(cond)
 //////////////////////////////////////
 // mpf Struct Define
-#define MPIR_MAX_LIMB_SIZE 300
 typedef struct
 {
   int _mp_prec;			/* Max precision, in number of `mp_limb_t's.
@@ -93,8 +102,14 @@ typedef __mpf_struct mpf_t[1];
 
 void mpf_init (mpf_ptr r);
 void mpf_clear (mpf_ptr m);
+void mpf_neg (mpf_ptr r, mpf_srcptr u);
+void mpf_set (mpf_ptr r, mpf_srcptr u);
 void mpf_set_d(mpf_ptr r, double d);
 double mpf_get_d(mpf_srcptr src);
+void mpf_mul_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v);
+void mpf_div_ui (mpf_ptr r, mpf_srcptr u, mpir_ui v);
+void mpf_add (mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
+void mpf_sub (mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
 
 int IsCUDA_Supported(int bPrintInfoToConsole);
 #if defined (__cplusplus)
