@@ -29,12 +29,18 @@ int main()
     mp_exp_t ee;
     mpf_get_d_2exp(&ee, f4);
     mpf_set_d(f1,10.0);
-	
-	mpf_mul(f5, f4, f1);// f2=f4 * f1;
+
+	mpf_mul(f5, f4, f1);// f2=f4 * f1;1358.016
 	d5 = mpf_get_d(f5);
 
-	mpf_div(f6,f4,f1);// f5=f4/f1;13.58016
+	mpf_div(f6, f4, f1);// f5=f4/f1;13.58016
 	d6 = mpf_get_d(f6);
+	mpf_div_ui(f7, f6, 10);// f5=f4/f1;13.58016
+	d7 = mpf_get_d(f7);
+	if (mpf_cmp_d(f7, 10) > 0)
+	{
+		printf("big");
+	}
 /*    gmp_sprintf(sBuf,"\n%Ff,%ld\n",f5,ee);*/
     printf("%ld %f %s\n",ee,d4,sBuf);
     mpf_clear(f1);

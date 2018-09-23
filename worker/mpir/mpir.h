@@ -114,6 +114,9 @@ void mpf_add (mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
 void mpf_sub(mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
 void mpf_mul(mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
 void mpf_div(mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
+void mpf_div_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v);
+int mpf_cmp_d(mpf_srcptr f, double d);
+int mpf_cmp(mpf_srcptr u, mpf_srcptr v);
 
 int IsCUDA_Supported(int bPrintInfoToConsole);
 #if defined (__cplusplus)

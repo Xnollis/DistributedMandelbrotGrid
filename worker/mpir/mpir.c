@@ -21,11 +21,11 @@ void mpf_clear (mpf_ptr m)
 void mpf_set_d (mpf_ptr r, double d)
 {
   int negative;
-/* check if is a valid double value
+ //check if is a valid double value
   DOUBLE_NAN_INF_ACTION (d,
                          __gmp_invalid_operation (),
                          __gmp_invalid_operation ());
-*/
+
   if (UNLIKELY (d == 0))
     {
       SIZ(r) = 0;
@@ -75,6 +75,109 @@ double mpf_get_d_2exp (mp_exp_t *exp2, mpf_srcptr src)
 
   return mpn_get_d (ptr, abs_size, size,
                     (long) - (abs_size * GMP_NUMB_BITS - cnt));
+}
+int mpf_cmp_d(mpf_srcptr f, double d)
+{
+	//mp_limb_t  darray[LIMBS_PER_DOUBLE];//because we use array , not pointer
+	mpf_t      df;
+	mpf_init(df);
+	/* d=NaN has no sensible return value, so raise an exception.
+	d=Inf or -Inf is always bigger than z.  */
+	DOUBLE_NAN_INF_ACTION(d,
+		__gmp_invalid_operation(),
+		return (d < 0.0 ? 1 : -1));
+
+	if (d == 0.0)
+		return SIZ(f);
+
+	//PTR(df) = darray; //because we use array , not pointer
+	SIZ(df) = (d >= 0.0 ? LIMBS_PER_DOUBLE : -LIMBS_PER_DOUBLE);
+	EXP(df) = __gmp_extract_double(PTR(df), ABS(d));
+
+	return mpf_cmp(f, df);
+}
+int mpf_cmp(mpf_srcptr u, mpf_srcptr v)
+{
+	mp_srcptr up, vp;
+	mp_size_t usize, vsize;
+	mp_exp_t uexp, vexp;
+	int cmp;
+	int usign;
+
+	uexp = u->_mp_exp;
+	vexp = v->_mp_exp;
+
+	usize = u->_mp_size;
+	vsize = v->_mp_size;
+
+	/* 1. Are the signs different?  */
+	if ((usize ^ vsize) >= 0)
+	{
+		/* U and V are both non-negative or both negative.  */
+		if (usize == 0)
+			/* vsize >= 0 */
+			return -(vsize != 0);
+		if (vsize == 0)
+			/* usize >= 0 */
+			return usize != 0;
+		/* Fall out.  */
+	}
+	else
+	{
+		/* Either U or V is negative, but not both.  */
+		return usize >= 0 ? 1 : -1;
+	}
+
+	/* U and V have the same sign and are both non-zero.  */
+
+	usign = usize >= 0 ? 1 : -1;
+
+	/* 2. Are the exponents different?  */
+	if (uexp > vexp)
+		return usign;
+	if (uexp < vexp)
+		return -usign;
+
+	usize = ABS(usize);
+	vsize = ABS(vsize);
+
+	up = u->_mp_d;
+	vp = v->_mp_d;
+
+#define STRICT_MPF_NORMALIZATION 0
+#if ! STRICT_MPF_NORMALIZATION
+	/* Ignore zeroes at the low end of U and V.  */
+	while (up[0] == 0)
+	{
+		up++;
+		usize--;
+	}
+	while (vp[0] == 0)
+	{
+		vp++;
+		vsize--;
+	}
+#endif
+
+	if (usize > vsize)
+	{
+		cmp = mpn_cmp(up + usize - vsize, vp, vsize);
+		if (cmp == 0)
+			return usign;
+	}
+	else if (vsize > usize)
+	{
+		cmp = mpn_cmp(up, vp + vsize - usize, usize);
+		if (cmp == 0)
+			return -usign;
+	}
+	else
+	{
+		cmp = mpn_cmp(up, vp, usize);
+		if (cmp == 0)
+			return 0;
+	}
+	return cmp > 0 ? usign : -usign;
 }
 void mpf_mul(mpf_ptr r, mpf_srcptr u, mpf_srcptr v)
 {
