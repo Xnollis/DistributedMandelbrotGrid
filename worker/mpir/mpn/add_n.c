@@ -19,11 +19,11 @@ along with the GNU MP Library; see the file COPYING.LIB.  If not, write to
 the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 MA 02110-1301, USA. */
 
-#include "mpir.h"
-#include "gmpn_add.h"
+#include "mpir_inter_decl.h"
 
 #if GMP_NAIL_BITS == 0
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_add_n (mp_ptr rp, mp_srcptr up, mp_srcptr vp, mp_size_t n)
 {
@@ -54,6 +54,7 @@ mpn_add_n (mp_ptr rp, mp_srcptr up, mp_srcptr vp, mp_size_t n)
 
 #if GMP_NAIL_BITS >= 1
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_add_n (mp_ptr rp, mp_srcptr up, mp_srcptr vp, mp_size_t n)
 {
@@ -79,18 +80,21 @@ mpn_add_n (mp_ptr rp, mp_srcptr up, mp_srcptr vp, mp_size_t n)
 
 #endif
 
+__GMP_DECLSPEC
 mp_limb_t mpn_add (mp_ptr __gmp_wp, mp_srcptr __gmp_xp, mp_size_t __gmp_xsize, mp_srcptr __gmp_yp, mp_size_t __gmp_ysize)
 {
     mp_limb_t  __gmp_c;
     __GMPN_ADD (__gmp_c, __gmp_wp, __gmp_xp, __gmp_xsize, __gmp_yp, __gmp_ysize);
     return __gmp_c;
 }
+__GMP_DECLSPEC
 mp_limb_t mpn_add_1 (mp_ptr __gmp_dst, mp_srcptr __gmp_src, mp_size_t __gmp_size, mp_limb_t __gmp_n) __GMP_NOTHROW
 {
     mp_limb_t  __gmp_c;
     __GMPN_ADD_1 (__gmp_c, __gmp_dst, __gmp_src, __gmp_size, __gmp_n);
     return __gmp_c;
 }
+__GMP_DECLSPEC
 int mpn_cmp (mp_srcptr __gmp_xp, mp_srcptr __gmp_yp, mp_size_t __gmp_size) __GMP_NOTHROW
 {
     int __gmp_result;

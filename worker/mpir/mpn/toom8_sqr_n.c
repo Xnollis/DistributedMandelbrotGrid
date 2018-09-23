@@ -49,7 +49,7 @@ along with the GNU MP Library.  If not, see http://www.gnu.org/licenses/.  */
     else								\
       mpn_toom8_sqr_n (p, a, n);					\
   } while (0)
-
+__GMP_DECLSPEC
 void
 mpn_toom8_sqr_n  (mp_ptr pp, mp_srcptr ap, mp_size_t an)
 {

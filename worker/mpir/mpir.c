@@ -1,24 +1,23 @@
-//#include "cuda_runtime.h"
 #include<stdio.h>
 #include<stdlib.h>
 #include<memory.h>
 #include "mpir_inter_decl.h"
 /////////////////////////////////////////
-const static int __gmp_default_fp_limb_precision=2;
+//const static int __gmp_default_fp_limb_precision=2;
 /////////////////////////////////////////
-void mpf_init (mpf_ptr r)
+__GMP_DECLSPEC void mpf_init(mpf_ptr r)
 {
-  mp_size_t prec = __gmp_default_fp_limb_precision;
+	mp_size_t prec = 2;// __gmp_default_fp_limb_precision;
   r->_mp_size = 0;
   r->_mp_exp = 0;
   r->_mp_prec = prec;
   memset(r->_mp_d, 0, sizeof(r->_mp_d));
 }
-void mpf_clear (mpf_ptr m)
+__GMP_DECLSPEC void mpf_clear(mpf_ptr m)
 {
 	//Do nothing here
 }
-void mpf_set_d (mpf_ptr r, double d)
+__GMP_DECLSPEC void mpf_set_d(mpf_ptr r, double d)
 {
   int negative;
  //check if is a valid double value
@@ -38,7 +37,7 @@ void mpf_set_d (mpf_ptr r, double d)
   SIZ(r) = negative ? -LIMBS_PER_DOUBLE : LIMBS_PER_DOUBLE;
   EXP(r) = __gmp_extract_double (PTR(r), d);
 }
-double mpf_get_d(mpf_srcptr src)
+__GMP_DECLSPEC double mpf_get_d(mpf_srcptr src)
 {
 	mp_size_t  size, abs_size;
 	mp_exp_t       exp;
@@ -49,9 +48,9 @@ double mpf_get_d(mpf_srcptr src)
 
 	abs_size = ABS(size);
 	exp = (EXP(src) - abs_size) * GMP_NUMB_BITS;
-	return mpn_get_d(PTR(src), abs_size, size, exp);//32-bit, 参数总大小应该是10h字节，但是现在由于有64位的参数，总大小变为18h了 《---由于注释这里有中文，会导致无法编译通过
+	return mpn_get_d(PTR(src), abs_size, size, exp);//32-bit, 参数总大小应该是10h字节，但是现在由于有64位的参数，总大小变为18h了
 }
-double mpf_get_d_2exp (mp_exp_t *exp2, mpf_srcptr src)
+__GMP_DECLSPEC double mpf_get_d_2exp(mp_exp_t *exp2, mpf_srcptr src)
 {
   mp_size_t size, abs_size;
   mp_srcptr ptr;
@@ -76,7 +75,7 @@ double mpf_get_d_2exp (mp_exp_t *exp2, mpf_srcptr src)
   return mpn_get_d (ptr, abs_size, size,
                     (long) - (abs_size * GMP_NUMB_BITS - cnt));
 }
-int mpf_cmp_d(mpf_srcptr f, double d)
+__GMP_DECLSPEC int mpf_cmp_d(mpf_srcptr f, double d)
 {
 	//mp_limb_t  darray[LIMBS_PER_DOUBLE];//because we use array , not pointer
 	mpf_t      df;
@@ -96,7 +95,7 @@ int mpf_cmp_d(mpf_srcptr f, double d)
 
 	return mpf_cmp(f, df);
 }
-int mpf_cmp(mpf_srcptr u, mpf_srcptr v)
+__GMP_DECLSPEC int mpf_cmp(mpf_srcptr u, mpf_srcptr v)
 {
 	mp_srcptr up, vp;
 	mp_size_t usize, vsize;
@@ -179,7 +178,7 @@ int mpf_cmp(mpf_srcptr u, mpf_srcptr v)
 	}
 	return cmp > 0 ? usign : -usign;
 }
-void mpf_mul(mpf_ptr r, mpf_srcptr u, mpf_srcptr v)
+__GMP_DECLSPEC void mpf_mul(mpf_ptr r, mpf_srcptr u, mpf_srcptr v)
 {
 	mp_srcptr up, vp;
 	mp_size_t usize, vsize;
@@ -241,7 +240,7 @@ void mpf_mul(mpf_ptr r, mpf_srcptr u, mpf_srcptr v)
 	}
 	TMP_FREE;
 }
-void mpf_mul_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v)
+__GMP_DECLSPEC void mpf_mul_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v)
 {
 	mp_srcptr up;
 	mp_size_t usize;
@@ -333,7 +332,7 @@ void mpf_mul_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v)
 	size += cy_limb;
 	r->_mp_size = usize >= 0 ? size : -size;
 }
-void mpf_div_ui (mpf_ptr r, mpf_srcptr u, mpir_ui v)
+__GMP_DECLSPEC void mpf_div_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v)
 {
     mp_srcptr up;
     mp_ptr rp, tp, rtp;
@@ -413,7 +412,7 @@ void mpf_div_ui (mpf_ptr r, mpf_srcptr u, mpir_ui v)
     TMP_FREE;
 }
 
-void mpf_add (mpf_ptr r, mpf_srcptr u, mpf_srcptr v)
+__GMP_DECLSPEC void mpf_add(mpf_ptr r, mpf_srcptr u, mpf_srcptr v)
 {
     mp_srcptr up, vp;
     mp_ptr rp, tp;
@@ -565,7 +564,7 @@ void mpf_add (mpf_ptr r, mpf_srcptr u, mpf_srcptr v)
     TMP_FREE;
 }
 
-void mpf_sub (mpf_ptr r, mpf_srcptr u, mpf_srcptr v)
+__GMP_DECLSPEC void mpf_sub(mpf_ptr r, mpf_srcptr u, mpf_srcptr v)
 {
     mp_srcptr up, vp;
     mp_ptr rp, tp;
@@ -951,7 +950,7 @@ done:
     r->_mp_exp = exp;
     TMP_FREE;
 }
-void mpf_neg (mpf_ptr r, mpf_srcptr u)
+__GMP_DECLSPEC void mpf_neg(mpf_ptr r, mpf_srcptr u)
 {
     mp_size_t size;
     
@@ -980,7 +979,7 @@ void mpf_neg (mpf_ptr r, mpf_srcptr u)
     }
     r->_mp_size = size;
 }
-void mpf_set (mpf_ptr r, mpf_srcptr u)
+__GMP_DECLSPEC void mpf_set(mpf_ptr r, mpf_srcptr u)
 {
     mp_ptr rp;
     mp_srcptr up;
@@ -1004,7 +1003,7 @@ void mpf_set (mpf_ptr r, mpf_srcptr u)
     MPN_COPY_INCR (rp, up, asize);
 }
 
-void *TMP_ALLOC_FUNC(size_t n,char pLocalBuf[TMP_ALLOC_LOCAL_BUF_SIZE],size_t *pCnt)
+__GMP_DECLSPEC void *TMP_ALLOC_FUNC(size_t n, char pLocalBuf[TMP_ALLOC_LOCAL_BUF_SIZE], size_t *pCnt)
 {
     if(!pCnt||!pLocalBuf||n<=0)return NULL;
     size_t nRemain=TMP_ALLOC_LOCAL_BUF_SIZE-*pCnt;

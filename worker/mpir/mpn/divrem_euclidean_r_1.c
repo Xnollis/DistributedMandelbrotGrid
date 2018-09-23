@@ -24,6 +24,7 @@ dnl  Boston, MA 02110-1301, USA.
 #include "mpir_inter_decl.h"
 
 /* in each round we remove one limb from the body, i.e. k = 1 */
+__GMP_DECLSPEC
 mp_limb_t mpn_mod_1_1_wrap(mp_srcptr xp, mp_size_t xn, mp_limb_t d)
 {
    mp_limb_t dummy,  sh, sl, ret, i, c, ds, db[2], rem[2];
@@ -62,6 +63,7 @@ mp_limb_t mpn_mod_1_1_wrap(mp_srcptr xp, mp_size_t xn, mp_limb_t d)
 }
 
 /* in each round we remove two limbs from the body, i.e. k = 2 */
+__GMP_DECLSPEC
 mp_limb_t mpn_mod_1_2_wrap(mp_srcptr xp, mp_size_t xn, mp_limb_t d)
 {
    mp_limb_t dummy, h, l, i, ret, ds, c, db[3], rem[2];
@@ -103,6 +105,7 @@ mp_limb_t mpn_mod_1_2_wrap(mp_srcptr xp, mp_size_t xn, mp_limb_t d)
 }
 
 /* in each round we remove 3 limbs from the body */
+__GMP_DECLSPEC
 mp_limb_t mpn_mod_1_3_wrap(mp_srcptr xp, mp_size_t xn, mp_limb_t d)
 {
    mp_limb_t dummy, h, l,  i, ret, ds, c, db[4], rem[2];
@@ -148,7 +151,8 @@ mp_limb_t mpn_mod_1_3_wrap(mp_srcptr xp, mp_size_t xn, mp_limb_t d)
 /* 
    This is a generic version for k >= 2 
    In each round we remove k limbs from the body
-*/
+   */
+__GMP_DECLSPEC
 mp_limb_t mpn_mod_1_k(mp_srcptr xp, mp_size_t xn, mp_limb_t d, mp_size_t k)
 {
    mp_limb_t dummy, h, l, sh, sl, th, tl, i, ret, ds, c, db[30]; /* need k + 1 entries in array */
@@ -233,7 +237,7 @@ mp_limb_t mpn_mod_1_k(mp_srcptr xp, mp_size_t xn, mp_limb_t d, mp_size_t k)
 
    return ret>>c;
 }
-
+#ifndef udiv_inverse
 /* d is mormalized */
 #define udiv_inverse(i,d) \
    do { \
@@ -274,7 +278,7 @@ mp_limb_t mpn_mod_1_k(mp_srcptr xp, mp_size_t xn, mp_limb_t d, mp_size_t k)
 #if UDIV_METHOD == 2
 #define UDIV udiv_qrnnd_barrett
 #endif
-
+#endif
 /*
    (xp, n) = (qp, n)*d + r and 0 <= r < d
 
@@ -282,7 +286,8 @@ mp_limb_t mpn_mod_1_k(mp_srcptr xp, mp_size_t xn, mp_limb_t d, mp_size_t k)
    dont need to always use it
    
    In euclid-div shiftout needs a final div for the remainder
-*/
+   */
+__GMP_DECLSPEC
 #if STORE_QUOTIENT
 mp_limb_t mpn_divrem_euclidean_qr_1(mp_ptr qp, mp_size_t qxn, 
                                    mp_srcptr xp, mp_size_t n, mp_limb_t d)
@@ -344,3 +349,5 @@ mp_limb_t mpn_divrem_euclidean_r_1(mp_srcptr xp, mp_size_t n, mp_limb_t d)
 
    return r;
 }    
+#undef STORE_QUOTIENT
+#undef UDIV_METHOD

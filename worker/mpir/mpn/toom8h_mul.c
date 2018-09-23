@@ -29,7 +29,9 @@ along with the GNU MP Library.  If not, see http://www.gnu.org/licenses/.  */
 #if HAVE_NATIVE_mpn_addlsh_n
 #define DO_mpn_addlsh_n(dst,src,n,s,ws) mpn_addlsh_n(dst,dst,src,n,s)
 #else
-static mp_limb_t
+static
+__GMP_DECLSPEC
+mp_limb_t
 DO_mpn_addlsh_n(mp_ptr dst, mp_srcptr src, mp_size_t n, unsigned int s, mp_ptr ws)
 {
 #if USE_MUL_1 && 0
@@ -43,6 +45,7 @@ DO_mpn_addlsh_n(mp_ptr dst, mp_srcptr src, mp_size_t n, unsigned int s, mp_ptr w
 #endif
 
 /* Evaluates a polynomial of degree k >= 3. */
+__GMP_DECLSPEC
 int
 mpn_toom_eval_pm2rexp(mp_ptr rp, mp_ptr rm,
 unsigned int q, mp_srcptr ap, mp_size_t n, mp_size_t t,
@@ -98,6 +101,7 @@ unsigned int s, mp_ptr ws)
 Finally recompose them obtaining:
 {pp,n+off} <- {pp,n}+{np,n}*2^{off*GMP_NUMB_BITS}
 */
+__GMP_DECLSPEC
 void
 mpn_toom_couple_handling(mp_ptr pp, mp_size_t n, mp_ptr np,
 int nsign, mp_size_t off, int ps, int ns)
@@ -172,6 +176,7 @@ int nsign, mp_size_t off, int ps, int ns)
    since n>80; S(n) <= ceil(log(n/10)/log(8))*(13+5)+n*15\8 < n*15\8 + lg2(n)*6
  */
 
+__GMP_DECLSPEC
 void
 mpn_toom8h_mul   (mp_ptr pp,
 		  mp_srcptr ap, mp_size_t an,
@@ -386,6 +391,7 @@ do {					\
 
 /* Evaluates a polynomial of degree 2 < k < GMP_NUMB_BITS, in the
 points +2 and -2. */
+__GMP_DECLSPEC
 int
 mpn_toom_eval_pm2(mp_ptr xp2, mp_ptr xm2, unsigned k,
 mp_srcptr xp, mp_size_t n, mp_size_t hn, mp_ptr tp)
@@ -454,7 +460,7 @@ mp_srcptr xp, mp_size_t n, mp_size_t hn, mp_ptr tp)
 
 // k degree poly so have k+1 coeffs and first k are size n
 // k>3 so we can do the first add unconditionally 
-int	mpn_toom_eval_pm1(mp_ptr pp, mp_ptr mp, unsigned int k, mp_srcptr xp, mp_size_t n, mp_size_t m, mp_ptr tp)
+__GMP_DECLSPEC int	mpn_toom_eval_pm1(mp_ptr pp, mp_ptr mp, unsigned int k, mp_srcptr xp, mp_size_t n, mp_size_t m, mp_ptr tp)
 {
 	int isneg = 0; unsigned int i;
 
@@ -524,6 +530,7 @@ int	mpn_toom_eval_pm1(mp_ptr pp, mp_ptr mp, unsigned int k, mp_srcptr xp, mp_siz
 }
 
 /* Evaluates a polynomial of degree k > 2, in the points +2^shift and -2^shift. */
+__GMP_DECLSPEC
 int
 mpn_toom_eval_pm2exp(mp_ptr xp2, mp_ptr xm2, unsigned k,
 mp_srcptr xp, mp_size_t n, mp_size_t hn, unsigned shift,
@@ -612,6 +619,7 @@ mp_ptr tp)
 	return neg;
 }
 
+__GMP_DECLSPEC
 int
 mpn_toom_eval_dgr3_pm1(mp_ptr xp1, mp_ptr xm1,
 mp_srcptr xp, mp_size_t n, mp_size_t x3n, mp_ptr tp)
@@ -658,7 +666,9 @@ mp_srcptr xp, mp_size_t n, mp_size_t x3n, mp_ptr tp)
 #if HAVE_NATIVE_mpn_sublsh_n
 #define DO_mpn_sublsh_n(dst,src,n,s,ws) mpn_sublsh_n(dst,dst,src,n,s)
 #else
-static mp_limb_t
+static
+__GMP_DECLSPEC
+mp_limb_t
 DO_mpn_sublsh_n(mp_ptr dst, mp_srcptr src, mp_size_t n, unsigned int s, mp_ptr ws)
 {
 #if USE_MUL_1 && 0
@@ -873,6 +883,7 @@ Negative intermediate results are stored two-complemented.
 Inputs are destroyed.
 */
 
+__GMP_DECLSPEC
 void
 mpn_toom_interpolate_16pts(mp_ptr pp, mp_ptr r1, mp_ptr r3, mp_ptr r5, mp_ptr r7,
 mp_size_t n, mp_size_t spt, int half, mp_ptr wsi)
@@ -1126,6 +1137,7 @@ mp_size_t n, mp_size_t spt, int half, mp_ptr wsi)
 #undef   r6
 }
 //////////////////////////////////////////////////////////////////////////
+__GMP_DECLSPEC
 void
 mpn_divexact_1(mp_ptr dst, mp_srcptr src, mp_size_t size, mp_limb_t divisor)
 {

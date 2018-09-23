@@ -49,7 +49,7 @@ int main()
     mpf_clear(f1);
 #define EPSILON 1e-12
     bool b;
-    d1=123.456;
+    d1=123.4561;
     d2=MPIRWorking_HOST(d1);
     b=(d1==d2);
     d3=fabs(d1)-fabs(d2);
@@ -60,7 +60,7 @@ int main()
     d3=fabs(d1)-fabs(d2);
     b=(d3<EPSILON);
     //i=IsCUDA_Supported(1);
-	//sayhello();
+	sayhello();
     return i;
 }
 

@@ -47,6 +47,7 @@ MA 02110-1301, USA. */
    2. PRODP != UP and PRODP != VP, i.e. the destination must be distinct from
       the multiplier and the multiplicand.  */
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_mul (mp_ptr prodp,
 	 mp_srcptr up, mp_size_t un,

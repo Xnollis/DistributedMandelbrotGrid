@@ -589,7 +589,7 @@ __src--;                                        \
 #define TMP_ALLOC_MP_PTRS(n)    TMP_ALLOC_TYPE(n,mp_ptr)
 #define TMP_SALLOC_MP_PTRS(n)   TMP_SALLOC_TYPE(n,mp_ptr)
 #define TMP_BALLOC_MP_PTRS(n)   TMP_BALLOC_TYPE(n,mp_ptr)
-void *TMP_ALLOC_FUNC(size_t n,char pLocalBuf[TMP_ALLOC_LOCAL_BUF_SIZE],size_t *pCnt);
+__GMP_DECLSPEC void *TMP_ALLOC_FUNC(size_t n, char pLocalBuf[TMP_ALLOC_LOCAL_BUF_SIZE], size_t *pCnt);
 #endif
 
 

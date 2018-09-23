@@ -31,6 +31,7 @@ MA 02110-1301, USA. */
 #define ONE  (mp_limb_t) 1
 #define WRAP_AROUND_BOUND 1500
 
+__GMP_DECLSPEC
 int
 mpn_is_invert (mp_srcptr xp, mp_srcptr ap, mp_size_t n)
 {
@@ -68,7 +69,8 @@ mpn_is_invert (mp_srcptr xp, mp_srcptr ap, mp_size_t n)
               A*X < B^(2n) <= A*(X+1)
 
    or X = ceil(B^(2n)/A) - 1.
-*/
+   */
+__GMP_DECLSPEC
 void
 mpn_invert (mp_ptr xp, mp_srcptr ap, mp_size_t n)
 {
@@ -212,6 +214,7 @@ mpn_invert (mp_ptr xp, mp_srcptr ap, mp_size_t n)
     }
 }
 
+__GMP_DECLSPEC
 void mpn_invert_trunc(mp_ptr x_new, mp_size_t m, mp_srcptr xp, mp_size_t n, mp_srcptr ap)
 {
   mp_ptr tp;

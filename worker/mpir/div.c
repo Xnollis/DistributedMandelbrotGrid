@@ -51,7 +51,7 @@ MA 02110-1301, USA. */
 
    If/when a quotient-only division exists it can be used here immediately.
    remp is only to satisfy mpn_tdiv_qr, the remainder is not used.  */
-
+__GMP_DECLSPEC
 void
 mpf_div (mpf_ptr r, mpf_srcptr u, mpf_srcptr v)
 {

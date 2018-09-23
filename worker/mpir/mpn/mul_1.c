@@ -28,6 +28,7 @@ MA 02110-1301, USA. */
 
 #if GMP_NAIL_BITS == 0
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_mul_1 (mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 {
@@ -56,6 +57,7 @@ mpn_mul_1 (mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 
 #if GMP_NAIL_BITS >= 1
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_mul_1 (mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 {

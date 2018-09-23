@@ -71,7 +71,8 @@ dnl  Boston, MA 02110-1301, USA.
    and don't need to always use it
    
    In euclid-div shiftout needs a final div for the remainder
-*/
+   */
+__GMP_DECLSPEC
 #if STORE_QUOTIENT
 mp_limb_t mpn_divrem_euclidean_qr_1(mp_ptr qp, mp_size_t qxn, 
                                    mp_srcptr xp, mp_size_t n, mp_limb_t d)
@@ -122,3 +123,6 @@ mp_limb_t mpn_divrem_euclidean_r_1(mp_srcptr xp, mp_size_t n, mp_limb_t d)
 
    return r;
 }    
+
+#undef STORE_QUOTIENT
+#undef UDIV_METHOD

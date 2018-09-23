@@ -41,6 +41,7 @@ MA 02110-1301, USA. */
 /* modlimb_invert_table[i] is the multiplicative inverse of 2*i+1 mod 256,
  ie. (modlimb_invert_table[i] * (2*i+1)) % 256 == 1 */
 
+
 const unsigned char  modlimb_invert_table[128] = {
     0x01, 0xAB, 0xCD, 0xB7, 0x39, 0xA3, 0xC5, 0xEF,
     0xF1, 0x1B, 0x3D, 0xA7, 0x29, 0x13, 0x35, 0xDF,
@@ -88,6 +89,7 @@ const unsigned char  modlimb_invert_table[128] = {
 
 /***************************************************************/
 
+__GMP_DECLSPEC
 mp_limb_t mpn_rsh_divrem_hensel_qr_1_1(mp_ptr qp, mp_srcptr xp,
                                        mp_size_t n, mp_limb_t d, int s, mp_limb_t cin)
 {
@@ -153,6 +155,7 @@ mp_limb_t mpn_rsh_divrem_hensel_qr_1_1(mp_ptr qp, mp_srcptr xp,
  using a two limb inverse of a one limb divisor
  (xp,n) = (qp,n)*d - ret*B^n and 0 <= ret < d
  */
+__GMP_DECLSPEC
 mp_limb_t mpn_rsh_divrem_hensel_qr_1_2(mp_ptr qp, mp_srcptr xp,
                                        mp_size_t n, mp_limb_t d, int s, mp_limb_t cin)
 {
@@ -249,6 +252,7 @@ mp_limb_t mpn_rsh_divrem_hensel_qr_1_2(mp_ptr qp, mp_srcptr xp,
     
     return h+c;
 }
+__GMP_DECLSPEC
 mp_limb_t mpn_rsh_divrem_hensel_qr_1(mp_ptr qp, mp_srcptr xp,
                                      mp_size_t n, mp_limb_t d, int s, mp_limb_t cin)
 {
@@ -264,6 +268,7 @@ mp_limb_t mpn_rsh_divrem_hensel_qr_1(mp_ptr qp, mp_srcptr xp,
     return mpn_rsh_divrem_hensel_qr_1_2(qp, xp, n, d, s, cin);
 }
 /***************************************************************/
+__GMP_DECLSPEC
 mp_limb_t
 mpn_divrem_1 (mp_ptr qp, mp_size_t qxn,
 	      mp_srcptr up, mp_size_t un, mp_limb_t d)
@@ -443,3 +448,6 @@ mpn_divrem_1 (mp_ptr qp, mp_size_t qxn,
 	}
     }
 }
+
+#undef STORE_QUOTIENT
+#undef UDIV_METHOD

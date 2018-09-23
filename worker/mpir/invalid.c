@@ -26,8 +26,10 @@ MA 02110-1301, USA. */
 #include <signal.h>
 #include <stdlib.h>
 
+#ifndef MPIR_CUDA_ACC
 #if HAVE_UNISTD_H
 #include <unistd.h>  /* for getpid */
+#endif
 #endif
 
 #include "mpir.h"
@@ -62,8 +64,11 @@ MA 02110-1301, USA. */
    That would both respect the exceptions mask and give a reason code in a
    BSD signal.  */
 
+__GMP_DECLSPEC
 void __gmp_invalid_operation (void)
 {
-  raise (SIGFPE);
-  abort ();
+#ifndef MPIR_CUDA_ACC
+	raise(SIGFPE);
+	abort();
+#endif // !MPIR_CUDA_ACC
 }

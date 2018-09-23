@@ -33,7 +33,7 @@ MA 02110-1301, USA. */
 */
 
 #include "mpir_inter_decl.h"
-
+__GMP_DECLSPEC
 void _tc4_add(mp_ptr rp, mp_size_t * rn, mp_srcptr r1, mp_size_t r1n, 
                                                  mp_srcptr r2, mp_size_t r2n)
 {
@@ -82,6 +82,7 @@ void _tc4_add(mp_ptr rp, mp_size_t * rn, mp_srcptr r1, mp_size_t r1n,
    }
 }
 
+__GMP_DECLSPEC
 void tc4_add(mp_ptr rp, mp_size_t * rn, mp_srcptr r1, mp_size_t r1n, 
                                                  mp_srcptr r2, mp_size_t r2n)
 {
@@ -92,6 +93,7 @@ void tc4_add(mp_ptr rp, mp_size_t * rn, mp_srcptr r1, mp_size_t r1n,
 	else _tc4_add(rp, rn, r1, r1n, r2, r2n);
 } 
 
+__GMP_DECLSPEC
 void _tc4_add_unsigned(mp_ptr rp, mp_size_t * rn, mp_srcptr r1, 
                                    mp_size_t r1n, mp_srcptr r2, mp_size_t r2n)
 {
@@ -120,6 +122,7 @@ void _tc4_add_unsigned(mp_ptr rp, mp_size_t * rn, mp_srcptr r1,
    } 
 }
 
+__GMP_DECLSPEC
 void tc4_add_unsigned(mp_ptr rp, mp_size_t * rn, mp_srcptr r1, 
                                     mp_size_t r1n, mp_srcptr r2, mp_size_t r2n)
 {
@@ -127,12 +130,14 @@ void tc4_add_unsigned(mp_ptr rp, mp_size_t * rn, mp_srcptr r1,
 	else _tc4_add_unsigned(rp, rn, r1, r1n, r2, r2n);
 } 
 
+__GMP_DECLSPEC
 void tc4_sub(mp_ptr rp, mp_size_t * rn, mp_srcptr r1, mp_size_t r1n, 
                                                    mp_srcptr r2, mp_size_t r2n)
 {
    tc4_add(rp, rn, r1, r1n, r2, -r2n);
 }
-	
+
+__GMP_DECLSPEC
 void tc4_lshift(mp_ptr rp, mp_size_t * rn, mp_srcptr xp, 
                                                   mp_size_t xn, mp_size_t bits)
 {
@@ -150,6 +155,7 @@ void tc4_lshift(mp_ptr rp, mp_size_t * rn, mp_srcptr xp,
 	}
 }
 
+__GMP_DECLSPEC
 void tc4_rshift_inplace(mp_ptr rp, mp_size_t * rn, mp_size_t bits)
 {
    if (*rn)
@@ -166,6 +172,7 @@ void tc4_rshift_inplace(mp_ptr rp, mp_size_t * rn, mp_size_t bits)
 	}
 }
 
+__GMP_DECLSPEC
 void tc4_addlsh1_unsigned(mp_ptr rp, mp_size_t * rn, mp_srcptr xp, mp_size_t xn)
 {
 	if (xn)
@@ -204,6 +211,7 @@ void tc4_addlsh1_unsigned(mp_ptr rp, mp_size_t * rn, mp_srcptr xp, mp_size_t xn)
 	}
 }
 
+__GMP_DECLSPEC
 void tc4_divexact_ui(mp_ptr rp, mp_size_t * rn, mp_ptr x, mp_size_t xn, mp_limb_t c)
 {
   mp_size_t abs_size;
@@ -219,6 +227,7 @@ void tc4_divexact_ui(mp_ptr rp, mp_size_t * rn, mp_ptr x, mp_size_t xn, mp_limb_
   *rn = (xn >= 0 ? abs_size : -abs_size);
 }
 
+__GMP_DECLSPEC
 void tc4_divexact_by3(mp_ptr rp, mp_size_t * rn, mp_ptr x, mp_size_t xn)
 {
 	if (xn)
@@ -237,6 +246,7 @@ void tc4_divexact_by3(mp_ptr rp, mp_size_t * rn, mp_ptr x, mp_size_t xn)
 	} else *rn = 0;
 }
 
+__GMP_DECLSPEC
 void tc4_divexact_by15(mp_ptr rp, mp_size_t * rn, mp_ptr x, mp_size_t xn)
 {
 	if (xn)
@@ -269,6 +279,7 @@ void tc4_divexact_by15(mp_ptr rp, mp_size_t * rn, mp_ptr x, mp_size_t xn)
   } while (0)
 #endif
 
+__GMP_DECLSPEC
 void tc4_addmul_1(mp_ptr wp, mp_size_t * wn, mp_srcptr xp, mp_size_t xn, mp_limb_t y)
 {
   mp_size_t  sign, wu, xu, ws, new_wn, min_size, dsize;
@@ -395,11 +406,13 @@ void tc4_addmul_1(mp_ptr wp, mp_size_t * wn, mp_srcptr xp, mp_size_t xn, mp_limb
   ASSERT (new_wn == 0 || wp[new_wn - 1] != 0);
 }
 
+__GMP_DECLSPEC
 void tc4_submul_1(mp_ptr wp, mp_size_t * wn, mp_srcptr x, mp_size_t xn, mp_limb_t y)
 {
 	tc4_addmul_1(wp, wn, x, -xn, y);
 }
 
+__GMP_DECLSPEC
 void tc4_copy (mp_ptr yp, mp_size_t * yn, mp_size_t offset, mp_srcptr xp, mp_size_t xn)
 {
   mp_size_t yu = ABS(*yn);
@@ -550,7 +563,7 @@ void tc4_copy (mp_ptr yp, mp_size_t * yn, mp_size_t offset, mp_srcptr xp, mp_siz
      for ( ; ind < nxx; ind++) \
         (rxx)[ind] = CNST_LIMB(0); \
   } while (0)
-
+__GMP_DECLSPEC
 void
 mpn_toom4_mul_n (mp_ptr rp, mp_srcptr up,
 		          mp_srcptr vp, mp_size_t n)
@@ -733,6 +746,7 @@ mpn_toom4_mul_n (mp_ptr rp, mp_srcptr up,
    only needs 2n - 1.
 */
 
+__GMP_DECLSPEC
 void
 mpn_toom4_sqr_n (mp_ptr rp, mp_srcptr up, mp_size_t n)
 {
@@ -740,7 +754,7 @@ mpn_toom4_sqr_n (mp_ptr rp, mp_srcptr up, mp_size_t n)
   mp_limb_t r30, r31;
   mp_ptr tp;
   mp_size_t a0n, a1n, a2n, a3n, sn, n1, n2, n3, n4, n5, n6, n7, n8, n9, rpn, t4;
-
+  TMP_DECL;
   len1 = n;
   ASSERT (n >= 1);
 
@@ -757,7 +771,7 @@ mpn_toom4_sqr_n (mp_ptr rp, mp_srcptr up, mp_size_t n)
 
    t4 = 2*sn+2; // allows mult of 2 integers of sn + 1 limbs
 
-   tp = __GMP_ALLOCATE_FUNC_LIMBS(4*t4 + 4*(sn + 1));
+   tp = (mp_ptr)TMP_ALLOC(4 * t4 + 4 * (sn + 1));//__GMP_ALLOCATE_FUNC_LIMBS(4*t4 + 4*(sn + 1));
 
    tc4_add_unsigned(u5, &n5, a3, a3n, a1, a1n); 
    tc4_add_unsigned(u4, &n4, a2, a2n, a0, a0n); 
@@ -819,7 +833,7 @@ mpn_toom4_sqr_n (mp_ptr rp, mp_srcptr up, mp_size_t n)
 		MPN_ZERO((rp + rpn), 2*n - rpn);
 	}
 
-   __GMP_FREE_FUNC_LIMBS (tp, 4*t4 + 4*(sn+1));
+	TMP_FREE(tp);//__GMP_FREE_FUNC_LIMBS (tp, 4*t4 + 4*(sn+1));
 }
 
 /*
@@ -842,7 +856,7 @@ rp          rp1          rp2           rp3          rp4           rp5         rp
    We assume that r1 is stored at tp, r2 at (tp + t4), r4 at (tp + 2*t4) 
 	and r6 (tp + 3*t4). Each of these r's has t4 = s4 + 1 limbs allocated.
 */
-void mpn_toom4_interpolate(mp_ptr rp, mp_size_t * rpn, mp_size_t sn,  
+__GMP_DECLSPEC void mpn_toom4_interpolate(mp_ptr rp, mp_size_t * rpn, mp_size_t sn,
 		       mp_ptr tp, mp_size_t s4, mp_size_t n4, mp_size_t n6, mp_limb_t r30)
 {
 	mp_size_t n1, n2, t4;
@@ -973,6 +987,7 @@ void mpn_toom4_interpolate(mp_ptr rp, mp_size_t * rpn, mp_size_t sn,
 
 Note the divexact_by3 code is just a special case of this
 */
+__GMP_DECLSPEC
 mp_limb_t mpn_divexact_byfobm1(mp_ptr qp, mp_srcptr xp, mp_size_t n,
 	mp_limb_t f, mp_limb_t Bm1of)
 {
@@ -1000,3 +1015,34 @@ mp_limb_t mpn_divexact_byfobm1(mp_ptr qp, mp_srcptr xp, mp_size_t n,
 
 	return acc*(-f);
 }
+
+#undef r1
+#undef r2
+#undef r4
+#undef r6
+
+#undef r3
+#undef r5
+#undef r7
+#undef a0
+#undef a1
+#undef a2
+#undef a3
+#undef b0
+#undef b1
+#undef b2
+#undef b3
+#undef u2
+#undef u3
+#undef u4
+#undef u5
+#undef u6
+
+/* Multiply {up, n} by {vp, n} and write the result to
+{prodp, 2n}.
+
+Note that prodp gets 2n limbs stored, even if the actual result
+only needs 2n - 1.
+*/
+
+#undef mpn_clearit

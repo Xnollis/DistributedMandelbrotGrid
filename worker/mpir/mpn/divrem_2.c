@@ -58,6 +58,7 @@ MA 02110-1301, USA. */
       remainder in NUM.
    3. NSIZE >= 2, even if QEXTRA_LIMBS is non-zero.  */
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_divrem_2 (mp_ptr qp, mp_size_t qxn,
 	      mp_ptr np, mp_size_t nn,
@@ -181,6 +182,7 @@ if (qxn==0) return mpn_divrem_euclidean_qr_2(qp,np,nn,dp);
   return most_significant_q_limb;
 }
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_sb_div_qr(mp_ptr qp,
 mp_ptr np, mp_size_t nn,
@@ -248,6 +250,7 @@ mp_limb_t dinv)
 
 	return qh;
 }
+__GMP_DECLSPEC
 mp_limb_t
 mpn_dc_div_qr(mp_ptr qp,
 mp_ptr np, mp_size_t nn,
@@ -407,6 +410,7 @@ mp_limb_t dinv)
 	TMP_FREE;
 	return qh;
 }
+__GMP_DECLSPEC
 mp_limb_t
 mpn_dc_div_qr_n(mp_ptr qp, mp_ptr np, mp_srcptr dp, mp_size_t n,
 mp_limb_t dinv, mp_ptr tp)
@@ -454,6 +458,7 @@ mp_limb_t dinv, mp_ptr tp)
 
 	return qh;
 }
+__GMP_DECLSPEC
 mp_limb_t
 mpn_inv_div_qr(mp_ptr qp,
 mp_ptr np, mp_size_t nn,
@@ -627,6 +632,7 @@ mp_srcptr dinv)
 	TMP_FREE;
 	return qh;
 }
+__GMP_DECLSPEC
 mp_limb_t
 mpn_inv_div_qr_n(mp_ptr qp, mp_ptr np,
 mp_srcptr dp, mp_size_t dn, mp_srcptr inv)

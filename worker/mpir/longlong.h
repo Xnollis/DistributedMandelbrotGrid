@@ -452,16 +452,13 @@ extern UWtype mpn_udiv_qrnnd_r _PROTO ((UWtype, UWtype, UWtype, UWtype *));
 	++__a;								\
       }									\
 									\
-    (count) = W_TYPE_SIZE + 1 - __a - __clz_tab[__xr >> __a];		\
+    (count) = W_TYPE_SIZE + 1 - __a - THE_CLZ_TAB[__xr >> __a];		\
   } while (0)
 /* This version gives a well-defined value for zero. */
 #define COUNT_LEADING_ZEROS_0 (W_TYPE_SIZE - 1)
 #define COUNT_LEADING_ZEROS_NEED_CLZ_TAB
 #endif
 
-#ifdef COUNT_LEADING_ZEROS_NEED_CLZ_TAB
-extern const unsigned char __GMP_DECLSPEC_G_VALUE __clz_tab[129];
-#endif
 
 #if !defined (count_trailing_zeros)
 /* Define count_trailing_zeros using count_leading_zeros.  The latter might be

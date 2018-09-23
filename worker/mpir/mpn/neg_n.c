@@ -27,7 +27,8 @@ to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 /* 
    macro this or use asm if we can get the loop running at same speed as a 
    com_n, then we only make one pass over the data.
-*/
+   */
+__GMP_DECLSPEC
 void
 mpn_com_n (mp_ptr rp, mp_srcptr up, mp_size_t n)
 {
@@ -37,6 +38,7 @@ mpn_com_n (mp_ptr rp, mp_srcptr up, mp_size_t n)
         *rp++ = ~ul & GMP_NUMB_MASK;
     } while (--n != 0);
 }
+__GMP_DECLSPEC
 mp_limb_t
 mpn_neg_n(mp_ptr rp, mp_srcptr up, mp_size_t n)
 {

@@ -49,7 +49,7 @@ MA 02110-1301, USA. */
 
 
 #if ! defined (READY_WITH_mpn_sqr_basecase) && HAVE_NATIVE_mpn_addmul_2s
-void
+__GMP_DECLSPEC void
 mpn_sqr_basecase (mp_ptr rp, mp_srcptr up, mp_size_t n)
 {
   mp_size_t i;
@@ -130,7 +130,7 @@ mpn_sqr_basecase (mp_ptr rp, mp_srcptr up, mp_size_t n)
    add: u0 u2 u3      add: u0 u2 u4	add: u0 u2 u4 u5
    sub: u1	      sub: u1 u3	sub: u1 u3
 */
-
+__GMP_DECLSPEC
 void
 mpn_sqr_basecase (mp_ptr rp, mp_srcptr up, mp_size_t n)
 {
@@ -250,7 +250,7 @@ mpn_sqr_basecase (mp_ptr rp, mp_srcptr up, mp_size_t n)
 #if ! defined (READY_WITH_mpn_sqr_basecase)
 
 /* Default mpn_sqr_basecase using mpn_addmul_1.  */
-
+__GMP_DECLSPEC
 void
 mpn_sqr_basecase (mp_ptr rp, mp_srcptr up, mp_size_t n)
 {

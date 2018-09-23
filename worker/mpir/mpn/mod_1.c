@@ -50,6 +50,7 @@ MA 02110-1301, USA. */
    distributions of dividend and divisor.  In any case this idea is left to
    CPU specific implementations to consider.  */
 #if 1
+__GMP_DECLSPEC
 mp_limb_t
 mpn_mod_1 (mp_srcptr up, mp_size_t un, mp_limb_t d)
 {
@@ -175,6 +176,7 @@ mpn_mod_1 (mp_srcptr up, mp_size_t un, mp_limb_t d)
 }
 #endif
 /* in each round we remove one limb from the body, i.e. k = 1 */
+__GMP_DECLSPEC
 void mpn_mod_1_1(mp_ptr rem, mp_srcptr xp, mp_size_t xn, mp_srcptr db)
 {
     mp_limb_t h, l, sh, sl;
@@ -204,6 +206,7 @@ void mpn_mod_1_1(mp_ptr rem, mp_srcptr xp, mp_size_t xn, mp_srcptr db)
 }
 
 /* in each round we remove one limb from the body, i.e. k = 1 */
+__GMP_DECLSPEC
 void mpn_mod_1_2(mp_ptr rem, mp_srcptr xp, mp_size_t xn, mp_srcptr db)
 {
     mp_limb_t h, l, sh, sl, th, tl;
@@ -244,6 +247,7 @@ void mpn_mod_1_2(mp_ptr rem, mp_srcptr xp, mp_size_t xn, mp_srcptr db)
 }
 
 /* in each round we remove one limb from the body, i.e. k = 1 */
+__GMP_DECLSPEC
 void mpn_mod_1_3(mp_ptr rem, mp_srcptr xp, mp_size_t xn, mp_srcptr db)
 {
     mp_limb_t h, l, sh, sl, th, tl;

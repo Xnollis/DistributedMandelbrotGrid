@@ -11,8 +11,18 @@ extern "C" {
 
 //compile data type defines
 #define _LONG_LONG_LIMB	1  //x64 SYSTEM sign
+
+#ifdef __CUDA_RUNTIME_H__
+#define __GMP_DECLSPEC __device__
+#define MPIR_CUDA_ACC
+#define MPIR_NAME_PREFIX(x) cuda_##x
+#include "../mpir_CUDA/mpir_config.h"
+#else
 #define __GMP_DECLSPEC
-#define __GMP_DECLSPEC_G_VALUE //the DeclSpec for Global Value
+#define MPIR_NAME_PREFIX(x) x
+#endif // if def __CUDA_RUNTIME_H__
+
+#define __GMP_DECLSPEC_G_VALUE __GMP_DECLSPEC//the DeclSpec for Global Value
 #define __GMP_EXTERN_INLINE extern inline
 #define __GMP_NOTHROW
 #define ATTRIBUTE_CONST
@@ -101,22 +111,22 @@ typedef __mpir_const __mpf_struct *	mpf_srcptr;
 typedef __mpf_struct mpf_t[1];
 
 
-void mpf_init (mpf_ptr r);
-void mpf_clear (mpf_ptr m);
-void mpf_neg (mpf_ptr r, mpf_srcptr u);
-void mpf_set (mpf_ptr r, mpf_srcptr u);
-void mpf_set_d(mpf_ptr r, double d);
-double mpf_get_d(mpf_srcptr src);
-double mpf_get_d_2exp (mp_exp_t *exp2, mpf_srcptr src);
-void mpf_mul_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v);
-void mpf_div_ui (mpf_ptr r, mpf_srcptr u, mpir_ui v);
-void mpf_add (mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
-void mpf_sub(mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
-void mpf_mul(mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
-void mpf_div(mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
-void mpf_div_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v);
-int mpf_cmp_d(mpf_srcptr f, double d);
-int mpf_cmp(mpf_srcptr u, mpf_srcptr v);
+__GMP_DECLSPEC void mpf_init(mpf_ptr r);
+__GMP_DECLSPEC void mpf_clear(mpf_ptr m);
+__GMP_DECLSPEC void mpf_neg(mpf_ptr r, mpf_srcptr u);
+__GMP_DECLSPEC void mpf_set(mpf_ptr r, mpf_srcptr u);
+__GMP_DECLSPEC void mpf_set_d(mpf_ptr r, double d);
+__GMP_DECLSPEC double mpf_get_d(mpf_srcptr src);
+__GMP_DECLSPEC double mpf_get_d_2exp(mp_exp_t *exp2, mpf_srcptr src);
+__GMP_DECLSPEC void mpf_mul_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v);
+__GMP_DECLSPEC void mpf_div_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v);
+__GMP_DECLSPEC void mpf_add(mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
+__GMP_DECLSPEC void mpf_sub(mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
+__GMP_DECLSPEC void mpf_mul(mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
+__GMP_DECLSPEC void mpf_div(mpf_ptr r, mpf_srcptr u, mpf_srcptr v);
+__GMP_DECLSPEC void mpf_div_ui(mpf_ptr r, mpf_srcptr u, mpir_ui v);
+__GMP_DECLSPEC int mpf_cmp_d(mpf_srcptr f, double d);
+__GMP_DECLSPEC int mpf_cmp(mpf_srcptr u, mpf_srcptr v);
 
 int IsCUDA_Supported(int bPrintInfoToConsole);
 #if defined (__cplusplus)

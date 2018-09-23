@@ -23,6 +23,7 @@ dnl  Boston, MA 02110-1301, USA.
  
 #include "mpir_inter_decl.h"
 
+__GMP_DECLSPEC
 mp_limb_t mpn_divrem_euclidean_qr_2(mp_ptr qp, mp_ptr xp, mp_size_t xn, mp_srcptr dp)
 {
    mp_size_t qn;

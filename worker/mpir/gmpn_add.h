@@ -221,7 +221,7 @@ do {                                  \
 #ifndef invert_limb
 #define invert_limb(invxl,xl)                   \
 do {                                          \
-mp_limb_t dummy;                            \
+mp_limb_t dummy=0;                            \
 ASSERT ((xl) != 0);                         \
 udiv_qrnnd (invxl, dummy, ~(xl), ~CNST_LIMB(0), xl);  \
 } while (0)
@@ -274,7 +274,6 @@ mp_limb_t  __w = (x) - (y);         \
 #define mpn_divmod_1(qp,np,nsize,dlimb) \
 mpn_divrem_1 (qp, __GMP_CAST (mp_size_t, 0), np, nsize, dlimb)
 
-__GMP_DECLSPEC extern const unsigned char  modlimb_invert_table[128];
 
 #define modlimb_invert(inv,n)                        \
 do {                                    \
@@ -282,7 +281,7 @@ mp_limb_t  __n = (n);                        \
 mp_limb_t  __inv;                            \
 ASSERT ((__n & 1) == 1);                        \
 \
-__inv = modlimb_invert_table[(__n/2) & 0x7F]; /*  8 */        \
+__inv = THE_INVERT_TABLE[(__n/2) & 0x7F]; /*  8 */        \
 if (GMP_NUMB_BITS > 8)   __inv = 2 * __inv - __inv * __inv * __n;    \
 if (GMP_NUMB_BITS > 16)  __inv = 2 * __inv - __inv * __inv * __n;    \
 if (GMP_NUMB_BITS > 32)  __inv = 2 * __inv - __inv * __inv * __n;    \

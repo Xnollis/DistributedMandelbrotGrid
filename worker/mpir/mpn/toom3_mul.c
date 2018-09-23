@@ -62,7 +62,8 @@ MA 02110-1301, USA. */
      c2   <- t2 - v0 - vinf
      c3   <- t1 - t2
      c4   <- vinf
-*/ 
+	 */
+__GMP_DECLSPEC
 void
 mpn_toom3_interpolate (mp_ptr c, mp_ptr v1, mp_ptr v2, mp_ptr vm1,
 		                 mp_ptr vinf, mp_size_t k, mp_size_t rr2, int sa,
@@ -239,6 +240,7 @@ mpn_toom3_interpolate (mp_ptr c, mp_ptr v1, mp_ptr v2, mp_ptr vm1,
   for na >= 20.
  */
 
+__GMP_DECLSPEC
 void
 mpn_toom3_mul (mp_ptr c, mp_srcptr a, mp_size_t an, mp_srcptr b, mp_size_t bn, mp_ptr t)
 {
@@ -411,6 +413,7 @@ mpn_toom3_mul (mp_ptr c, mp_srcptr a, mp_size_t an, mp_srcptr b, mp_size_t bn, m
 #undef vinf
 }
 
+__GMP_DECLSPEC
 void
 mpn_toom42_mul (mp_ptr c, mp_srcptr a, mp_size_t an, 
                                       mp_srcptr b, mp_size_t bn, mp_ptr t)
@@ -611,7 +614,8 @@ mpn_toom42_mul (mp_ptr c, mp_srcptr a, mp_size_t an,
 	(a0*b0), (a2*b1), (a0-a1+a2)*(b0-b1), (a0+a1+a2)*(b0+b1).
 	The multiplication will be (2k+r) x (k + r2) and therefore the output has
 	space for 3k + rr2 limbs.
-*/
+	*/
+__GMP_DECLSPEC
 void
 mpn_toom32_mul (mp_ptr c, mp_srcptr a, mp_size_t an, 
                                            mp_srcptr b, mp_size_t bn, mp_ptr t)
@@ -811,6 +815,7 @@ mpn_toom32_mul (mp_ptr c, mp_srcptr a, mp_size_t an,
 
 
 /* (xp, n) = (qp, n)*3 - ret*B^n and 0 <= ret < 3 */
+__GMP_DECLSPEC
 mp_limb_t mpn_divexact_by3c(mp_ptr qp, mp_srcptr xp, mp_size_t n, mp_limb_t ci)
 {
 	mp_size_t j;

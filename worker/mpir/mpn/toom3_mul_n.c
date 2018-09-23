@@ -72,7 +72,8 @@ MA 02110-1301, USA. */
 
    We need in addition 2*r for mpn_sublsh1_n, so the total is at most
    8/3*n+8*log2(n).
-*/
+   */
+__GMP_DECLSPEC
 void
 mpn_toom3_mul_n (mp_ptr c, mp_srcptr a, mp_srcptr b, mp_size_t n, mp_ptr t)
 {
@@ -247,6 +248,7 @@ mpn_toom3_mul_n (mp_ptr c, mp_srcptr a, mp_srcptr b, mp_size_t n, mp_ptr t)
 #undef vinf
 }
 
+__GMP_DECLSPEC
 void
 mpn_toom3_sqr_n (mp_ptr c, mp_srcptr a, mp_size_t n, mp_ptr t)
 {

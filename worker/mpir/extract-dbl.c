@@ -24,7 +24,7 @@ MA 02110-1301, USA. */
 #define BITS_IN_MANTISSA 53
 
 /* Extract a non-negative double in d.  */
-
+__GMP_DECLSPEC
 int __gmp_extract_double (mp_ptr rp, double d)
 {
   long exp;

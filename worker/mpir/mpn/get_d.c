@@ -23,18 +23,15 @@ along with the GNU MP Library; see the file COPYING.LIB.  If not, write to
 the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 MA 02110-1301, USA. */
 
-#include "mpir.h"
-#include "gmp_impl.h"
-#include "longlong.h"
-
+#include "mpir_inter_decl.h"
 
 #define CONST_1024	      (1024)
 #define CONST_NEG_1023	      (-1023)
 #define CONST_NEG_1022_SUB_53 (-1022 - 53)
 
 #ifdef COUNT_LEADING_ZEROS_NEED_CLZ_TAB
-const
-unsigned char __clz_tab[129] =
+
+const unsigned char __clz_tab[129] =
 {
 	1, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
 	7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
@@ -102,6 +99,7 @@ unsigned char __clz_tab[129] =
    double cast, neither in the IEEE or generic code.  */
 
 
+__GMP_DECLSPEC
 double
 mpn_get_d (mp_srcptr ptr, mp_size_t size, mp_size_t sign, long exp)
 {
@@ -309,3 +307,5 @@ mpn_get_d (mp_srcptr ptr, mp_size_t size, mp_size_t sign, long exp)
       return (sign >= 0 ? d : -d);
     }
 }
+#undef ONE_LIMB
+#undef TWO_LIMBS

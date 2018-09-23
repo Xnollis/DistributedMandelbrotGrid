@@ -35,7 +35,7 @@ MA 02110-1301, USA. */
 
 #if ! HAVE_NATIVE_mpn_karasub && HAVE_NATIVE_mpn_addsub_n
 
-static void	mpn_karasub(mp_ptr rp, mp_ptr tp, mp_size_t n)
+static __GMP_DECLSPEC void	mpn_karasub(mp_ptr rp, mp_ptr tp, mp_size_t n)
 {
    mp_size_t n2, n3;
    mp_limb_t c1 = 0, c2, c3, top[2];
@@ -67,7 +67,7 @@ static void	mpn_karasub(mp_ptr rp, mp_ptr tp, mp_size_t n)
 
 #if ! HAVE_NATIVE_mpn_karaadd && HAVE_NATIVE_mpn_addadd_n
 
-static void	mpn_karaadd(mp_ptr rp, mp_ptr tp, mp_size_t n)
+static __GMP_DECLSPEC void	mpn_karaadd(mp_ptr rp, mp_ptr tp, mp_size_t n)
 {
    mp_size_t n2, n3;
    mp_limb_t c1 = 0, c2, c3;
@@ -88,7 +88,7 @@ static void	mpn_karaadd(mp_ptr rp, mp_ptr tp, mp_size_t n)
 
 #if ! HAVE_NATIVE_mpn_karasub && ! HAVE_NATIVE_mpn_addsub_n
 
-static void	mpn_karasub(mp_ptr rp, mp_ptr tp, mp_size_t n)
+static __GMP_DECLSPEC void	mpn_karasub(mp_ptr rp, mp_ptr tp, mp_size_t n)
 {
    mp_size_t n2, n3;
    mp_limb_t c1, c2, c3, top[2];
@@ -120,7 +120,7 @@ static void	mpn_karasub(mp_ptr rp, mp_ptr tp, mp_size_t n)
 
 #if ! HAVE_NATIVE_mpn_karaadd && ! HAVE_NATIVE_mpn_addadd_n
 
-static void	mpn_karaadd(mp_ptr rp, mp_ptr tp, mp_size_t n)
+static __GMP_DECLSPEC  void	mpn_karaadd(mp_ptr rp, mp_ptr tp, mp_size_t n)
 {
    mp_size_t n2, n3;
    mp_limb_t c1, c2, c3;
@@ -138,6 +138,7 @@ static void	mpn_karaadd(mp_ptr rp, mp_ptr tp, mp_size_t n)
 #endif
 
 /* (rp, 2n) = (xp, n)*(yp, n) with temp space (tp, 2*n + C) */
+__GMP_DECLSPEC
 void mpn_kara_mul_n(mp_ptr rp, mp_srcptr xp, mp_srcptr yp, mp_size_t n, mp_ptr tp)
 {
    mp_size_t n2, n3;
@@ -221,6 +222,7 @@ void mpn_kara_mul_n(mp_ptr rp, mp_srcptr xp, mp_srcptr yp, mp_size_t n, mp_ptr t
 }
 
 /* (rp, 2n) = (xp, n)^2 with temp space (tp, 2*n + C) */
+__GMP_DECLSPEC
 void mpn_kara_sqr_n(mp_ptr rp, mp_srcptr xp, mp_size_t n, mp_ptr tp)
 {
    mp_size_t n2, n3;
@@ -277,6 +279,7 @@ void mpn_kara_sqr_n(mp_ptr rp, mp_srcptr xp, mp_size_t n, mp_ptr tp)
    mpn_karasub(rp, tp, n);
 }
 
+__GMP_DECLSPEC
 void
 mpn_mul_n (mp_ptr p, mp_srcptr a, mp_srcptr b, mp_size_t n)
 {
@@ -327,6 +330,7 @@ mpn_mul_n (mp_ptr p, mp_srcptr a, mp_srcptr b, mp_size_t n)
 #endif
 }
 
+__GMP_DECLSPEC
 void
 mpn_sqr (mp_ptr p, mp_srcptr a, mp_size_t n)
 {
@@ -386,6 +390,7 @@ mpn_sqr (mp_ptr p, mp_srcptr a, mp_size_t n)
 
 #if GMP_NAIL_BITS == 0
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_addmul_1(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 {
@@ -416,6 +421,7 @@ mpn_addmul_1(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 
 #if GMP_NAIL_BITS == 1
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_addmul_1(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 {
@@ -451,6 +457,7 @@ mpn_addmul_1(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 
 #if GMP_NAIL_BITS >= 2
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_addmul_1(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 {
@@ -482,6 +489,7 @@ mpn_addmul_1(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 }
 
 #endif
+__GMP_DECLSPEC
 mp_limb_t
 mpn_addmul_2(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_srcptr vp)
 {
@@ -491,6 +499,7 @@ mpn_addmul_2(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_srcptr vp)
 
 #if GMP_NAIL_BITS == 0
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_submul_1(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 {
@@ -521,6 +530,7 @@ mpn_submul_1(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 
 #if GMP_NAIL_BITS == 1
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_submul_1(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 {
@@ -556,6 +566,7 @@ mpn_submul_1(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 
 #if GMP_NAIL_BITS >= 2
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_submul_1(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 {
@@ -587,6 +598,7 @@ mpn_submul_1(mp_ptr rp, mp_srcptr up, mp_size_t n, mp_limb_t vl)
 }
 
 #endif
+__GMP_DECLSPEC
 mp_limb_t
 mpn_rshift(mp_ptr rp, mp_srcptr up, mp_size_t n, unsigned int cnt)
 {
@@ -616,6 +628,7 @@ mpn_rshift(mp_ptr rp, mp_srcptr up, mp_size_t n, unsigned int cnt)
 	return retval;
 }
 
+__GMP_DECLSPEC
 mp_limb_t
 mpn_lshift(mp_ptr rp, mp_srcptr up, mp_size_t n, unsigned int cnt)
 {
@@ -647,7 +660,7 @@ mpn_lshift(mp_ptr rp, mp_srcptr up, mp_size_t n, unsigned int cnt)
 
 	return retval;
 }
-
+__GMP_DECLSPEC
 void
 mpn_mul_basecase(mp_ptr rp,
 mp_srcptr up, mp_size_t un,

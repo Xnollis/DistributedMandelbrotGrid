@@ -24,7 +24,7 @@ MA 02110-1301, USA. */
 
 #include "mpir.h"
 
-
+#if 0
 void *	(*__gmp_allocate_func) (size_t) = __gmp_default_allocate;
 void *	(*__gmp_reallocate_func) (void *, size_t, size_t)
      = __gmp_default_reallocate;
@@ -143,3 +143,4 @@ __gmp_default_free (void *blk_ptr, size_t blk_size)
 #endif
   free (blk_ptr);
 }
+#endif
