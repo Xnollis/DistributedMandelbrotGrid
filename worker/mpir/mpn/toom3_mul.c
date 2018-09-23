@@ -72,7 +72,8 @@ mpn_toom3_interpolate (mp_ptr c, mp_ptr v1, mp_ptr v2, mp_ptr vm1,
   mp_size_t twok = k + k;
   mp_size_t kk1 = twok + 1;
   mp_ptr c1, c2, c3, c4, c5;
-  mp_limb_t cout; /* final carry, should be zero at the end */
+  //mp_limb_t cout;
+    /* final carry, should be zero at the end */
 
   c1 = c + k;
   c2 = c1 + k;
@@ -415,7 +416,7 @@ mpn_toom42_mul (mp_ptr c, mp_srcptr a, mp_size_t an,
                                       mp_srcptr b, mp_size_t bn, mp_ptr t)
 {
   mp_size_t k, k1, kk1, r, r2, twok, threek, rr2, n1, n2;
-  mp_limb_t cy, cc, saved, vinf0, c20, c21;
+  mp_limb_t saved, vinf0, c20, c21;
   mp_ptr trec;
   int sa, sb;
   mp_ptr c1, c2, c3, c4, t1, t2, t3, t4;
@@ -616,7 +617,7 @@ mpn_toom32_mul (mp_ptr c, mp_srcptr a, mp_size_t an,
                                            mp_srcptr b, mp_size_t bn, mp_ptr t)
 {
   mp_size_t k, k1, kk1, r, r2, twok, threek, rr2, n1, n2;
-  mp_limb_t cy, cc, saved;
+  mp_limb_t cy, saved;
   mp_ptr trec;
   int sa, sb;
   mp_ptr c1, c2, c3, c4, c5, t1, t2, t3, t4;

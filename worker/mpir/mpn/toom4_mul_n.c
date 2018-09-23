@@ -34,10 +34,6 @@ MA 02110-1301, USA. */
 
 #include "mpir_inter_decl.h"
 
-void
-mpn_toom4_mul_n (mp_ptr rp, mp_srcptr up,
-		          mp_srcptr vp, mp_size_t n);
-
 void _tc4_add(mp_ptr rp, mp_size_t * rn, mp_srcptr r1, mp_size_t r1n, 
                                                  mp_srcptr r2, mp_size_t r2n)
 {
@@ -559,7 +555,6 @@ void
 mpn_toom4_mul_n (mp_ptr rp, mp_srcptr up,
 		          mp_srcptr vp, mp_size_t n)
 {
-  mp_size_t ind;
   mp_limb_t cy, cy2, r30, r31;
   mp_ptr tp;
   mp_size_t sn, n1, n2, n3, n4, n5, n6, n7, n8, rpn, t4, h1;
@@ -742,7 +737,7 @@ void
 mpn_toom4_sqr_n (mp_ptr rp, mp_srcptr up, mp_size_t n)
 {
   mp_size_t len1, ind;
-  mp_limb_t cy, r30, r31;
+  mp_limb_t r30, r31;
   mp_ptr tp;
   mp_size_t a0n, a1n, a2n, a3n, sn, n1, n2, n3, n4, n5, n6, n7, n8, n9, rpn, t4;
 
@@ -850,7 +845,7 @@ rp          rp1          rp2           rp3          rp4           rp5         rp
 void mpn_toom4_interpolate(mp_ptr rp, mp_size_t * rpn, mp_size_t sn,  
 		       mp_ptr tp, mp_size_t s4, mp_size_t n4, mp_size_t n6, mp_limb_t r30)
 {
-	mp_size_t n1, n2, n3, n5, n7, t4;
+	mp_size_t n1, n2, t4;
 	mp_limb_t saved, saved2, cy;
 
    t4 = s4 + 1; 

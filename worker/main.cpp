@@ -2,6 +2,7 @@
 #include "mpir_CUDA/mpir_CUDA.h"
 int main()
 {
+#pragma message(VAR_NAME_VALUE(GMP_NUMB_BITS))
     int i=0;
 
 	char sBuf[3600]; sBuf[0] = 0;

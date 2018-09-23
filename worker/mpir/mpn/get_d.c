@@ -125,7 +125,6 @@ mpn_get_d (mp_srcptr ptr, mp_size_t size, mp_size_t sign, long exp)
     }
   else
     {
-#pragma message(VAR_NAME_VALUE(GMP_NUMB_BITS))
       exp += GMP_NUMB_BITS * size;
     }
 

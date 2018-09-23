@@ -177,7 +177,7 @@ MA 02110-1301, USA.
 
 /* Define to 1 each of the following for which a native (ie. CPU specific)
 	implementation of the corresponding routine exists.  */
-#ifndef _MSC_VER
+#if 0
 #define HAVE_NATIVE_mpn_add_n 1
 #define HAVE_NATIVE_mpn_add_nc 1
 /* #undef HAVE_NATIVE_mpn_addadd_n */

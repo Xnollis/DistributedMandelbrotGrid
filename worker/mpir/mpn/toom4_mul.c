@@ -127,7 +127,6 @@ void
 mpn_toom4_mul (mp_ptr rp, mp_srcptr up, mp_size_t un,
 		          mp_srcptr vp, mp_size_t vn)
 {
-  mp_size_t ind;
   mp_limb_t cy, cy2, r30, r31;
   mp_ptr tp;
   mp_size_t sn, n1, n2, n3, n4, n5, n6, n7, n8, rpn, t4, h1, h2;
@@ -314,7 +313,7 @@ mpn_toom53_mul (mp_ptr rp, mp_srcptr up, mp_size_t un,
 		          mp_srcptr vp, mp_size_t vn)
 {
   mp_size_t ind;
-  mp_limb_t cy, r30, r31;
+  mp_limb_t r30, r31;
   mp_ptr tp;
   mp_size_t a0n, a1n, a2n, a3n, a4n, b0n, b1n, b2n, sn; 
   mp_size_t n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, rpn, t4;
