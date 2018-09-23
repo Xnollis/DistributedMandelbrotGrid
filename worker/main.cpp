@@ -1,5 +1,7 @@
 #include "mpir/mpir.h"
 #include "mpir_CUDA/mpir_CUDA.h"
+#include <math.h>
+double MPIRWorking_HOST(double fStartValue);
 int main()
 {
 #pragma message(VAR_NAME_VALUE(GMP_NUMB_BITS))
@@ -45,8 +47,37 @@ int main()
 /*    gmp_sprintf(sBuf,"\n%Ff,%ld\n",f5,ee);*/
     printf("%ld %f %s\n",ee,d4,sBuf);
     mpf_clear(f1);
-
+#define EPSILON 1e-12
+    bool b;
+    d1=123.456;
+    d2=MPIRWorking_HOST(d1);
+    b=(d1==d2);
+    d3=fabs(d1)-fabs(d2);
+    b=(d3<EPSILON);
+    d1=124;
+    d2=MPIRWorking_HOST(d1);
+    b=(d1==d2);
+    d3=fabs(d1)-fabs(d2);
+    b=(d3<EPSILON);
     //i=IsCUDA_Supported(1);
 	//sayhello();
     return i;
+}
+
+double MPIRWorking_HOST(double fStartValue)
+{
+    mpf_t f1,f2,f3,f4,f5;
+    mpf_init(f1);
+    mpf_init(f2);
+    mpf_init(f3);
+    mpf_init(f4);
+    mpf_init(f5);
+    mpf_set_d(f1,fStartValue);
+    mpf_mul(f2, f1, f1);// f2=f1 * f1;15241.383936
+    mpf_div_ui(f3, f2, 10);//f3=f2/10;1524.1383936
+    mpf_set_d(f2,1000L);
+    mpf_mul(f3,f3,f2);//f3=f3*f2;1524138.3936
+    mpf_div(f4,f3,f1);//f4=f3/f1;12345.6
+    mpf_div_ui(f5,f4,100L);//f4=f3/f1;123.456
+    return mpf_get_d(f5);
 }
