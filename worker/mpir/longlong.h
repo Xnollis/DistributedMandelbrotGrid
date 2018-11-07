@@ -452,9 +452,10 @@ extern UWtype mpn_udiv_qrnnd_r _PROTO ((UWtype, UWtype, UWtype, UWtype *));
 	++__a;								\
       }									\
 									\
-    (count) = W_TYPE_SIZE + 1 - __a - THE_CLZ_TAB[__xr >> __a];		\
+    (count) = W_TYPE_SIZE + 1 - __a - getValFrom_clz_tab(__xr >> __a);		\
   } while (0)
-/* This version gives a well-defined value for zero. */
+/* This version gives a well-defined value for zero.
+	(count) = W_TYPE_SIZE + 1 - __a - THE_CLZ_TAB[__xr >> __a];		\ */
 #define COUNT_LEADING_ZEROS_0 (W_TYPE_SIZE - 1)
 #define COUNT_LEADING_ZEROS_NEED_CLZ_TAB
 #endif

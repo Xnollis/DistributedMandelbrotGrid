@@ -281,7 +281,7 @@ mp_limb_t  __n = (n);                        \
 mp_limb_t  __inv;                            \
 ASSERT ((__n & 1) == 1);                        \
 \
-__inv = THE_INVERT_TABLE[(__n/2) & 0x7F]; /*  8 */        \
+__inv = getValFrom_invert_table((__n / 2) & 0x7F); /*  8 */        \
 if (GMP_NUMB_BITS > 8)   __inv = 2 * __inv - __inv * __inv * __n;    \
 if (GMP_NUMB_BITS > 16)  __inv = 2 * __inv - __inv * __inv * __n;    \
 if (GMP_NUMB_BITS > 32)  __inv = 2 * __inv - __inv * __inv * __n;    \

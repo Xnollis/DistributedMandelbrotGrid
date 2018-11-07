@@ -34,7 +34,7 @@ typedef long long int		mp_limb_signed_t;
 #define VALUE(x) VALUE_TO_STRING(x)
 #define VAR_NAME_VALUE(var) #var "="  VALUE(var)
 
-#define MPIR_MAX_LIMB_SIZE 300
+#define MPIR_MAX_LIMB_SIZE 30
 #define __GMP_BITS_PER_MP_LIMB             64
 #define GMP_LIMB_BITS                      64
 #define GMP_NAIL_BITS                      0

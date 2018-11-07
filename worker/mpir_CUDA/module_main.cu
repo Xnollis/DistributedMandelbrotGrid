@@ -7,8 +7,11 @@ __global__ void helloWorld();
 void sayhello(void)
 {
     helloWorld<<<3,2>>>(); //用3个block,每个block2个线程执行helloWorld() 
+	cudaError_t err=cudaGetLastError();
+	printf("cudaGetLastError()=%d\n",(int)err);
     cudaDeviceSynchronize(); //函数执行后必须有这个同步函数
 }
+
 #if 0
 double MPIRWorking_DEVICE(double fStartValue)
 {

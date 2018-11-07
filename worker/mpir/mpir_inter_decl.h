@@ -2,12 +2,13 @@
 #define __MPIR_INTER_DECL_H__
 #include"mpir.h"
 #include "longlong.h"
-#ifdef MPIR_CUDA_ACC
+/*#ifdef MPIR_CUDA_ACC
 extern const unsigned char __GMP_DECLSPEC_G_VALUE  modlimb_invert_tabled[128];
 #ifdef COUNT_LEADING_ZEROS_NEED_CLZ_TAB
 extern const unsigned char __GMP_DECLSPEC_G_VALUE __clz_tabd[129];
 #define THE_CLZ_TAB __clz_tabd
 #define THE_INVERT_TABLE modlimb_invert_tabled
+#error afowie
 #endif
 #else
 extern const unsigned char __GMP_DECLSPEC_G_VALUE  modlimb_invert_table[128];
@@ -16,7 +17,9 @@ extern const unsigned char __GMP_DECLSPEC_G_VALUE __clz_tab[129];
 #define THE_CLZ_TAB __clz_tab
 #define THE_INVERT_TABLE modlimb_invert_table
 #endif
-#endif // MPIR_CUDA_ACC
+#endif // MPIR_CUDA_ACC*/
+__GMP_DECLSPEC mp_limb_t getValFrom_clz_tab(mp_limb_t idx);
+__GMP_DECLSPEC mp_limb_t getValFrom_invert_table(mp_limb_t idx);
 __GMP_DECLSPEC mp_limb_t mpn_add_n(mp_ptr rp, mp_srcptr up, mp_srcptr vp, mp_size_t n);
 __GMP_DECLSPEC mp_limb_t mpn_sub_n(mp_ptr rp, mp_srcptr up, mp_srcptr vp, mp_size_t n);
 __GMP_DECLSPEC mp_limb_t mpn_add(mp_ptr __gmp_wp, mp_srcptr __gmp_xp, mp_size_t __gmp_xsize, mp_srcptr __gmp_yp, mp_size_t __gmp_ysize);

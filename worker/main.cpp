@@ -1,6 +1,7 @@
 #include "mpir/mpir.h"
 #include "mpir_CUDA/mpir_CUDA.h"
 #include <math.h>
+#include <conio.h>
 double MPIRWorking_HOST(double fStartValue);
 int main()
 {
@@ -19,7 +20,7 @@ int main()
 	mpf_init(f7);
     mpf_set_d(f1,123.456);
 
-	d1 = mpf_get_d(f1);
+	d1 = mpf_get_d(f1); 
     mpf_mul_ui(f2, f1, 10);//f2=f1*10,1234.56
     d2 = mpf_get_d(f2);
     mpf_add(f3,f2,f1);//f3=f2+f1,1358.016
@@ -59,11 +60,11 @@ int main()
     b=(d1==d2);
     d3=fabs(d1)-fabs(d2);
     b=(d3<EPSILON);
-    //i=IsCUDA_Supported(1);
-	sayhello();
+	//i=IsCUDA_Supported(1);
+	printf("Host-->MPIR sizes:sizeof(mp_limb_t)=%d,sizeof(mp_limb_signed_t)=%d,sizeof(mp_size_t)=%d,sizeof(mp_exp_t)=%d\n", sizeof(mp_limb_t), sizeof(mp_limb_signed_t), sizeof(mp_size_t), sizeof(mp_exp_t));
+	sayhello(); getch();
     return i;
 }
-
 double MPIRWorking_HOST(double fStartValue)
 {
     mpf_t f1,f2,f3,f4,f5;
