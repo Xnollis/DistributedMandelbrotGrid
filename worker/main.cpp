@@ -1,15 +1,14 @@
 #include "mpir/mpir.h"
 #include "mpir_CUDA/mpir_CUDA.h"
 #include <math.h>
+#ifdef WIN32
 #include <conio.h>
+#endif // DEBUG
 double MPIRWorking_HOST(double fStartValue);
 int main()
 {
-#pragma message(VAR_NAME_VALUE(GMP_NUMB_BITS))
+// #pragma message(VAR_NAME_VALUE(GMP_NUMB_BITS))
     int i=0;
-
-	char sBuf[3600]; sBuf[0] = 0;
-    double d1,d2,d3,d4,d5,d6,d7;
     mpf_t f1,f2,f3,f4,f5,f6,f7;
     mpf_init(f1);
     mpf_init(f2);
@@ -19,9 +18,25 @@ int main()
 	mpf_init(f6);
 	mpf_init(f7);
     mpf_set_d(f1,123.456);
+    mpf_set_d(f4,456.789);
+    MPF_TEST_AND_PRINT_UI(mpf_mul_ui,f1,10,f2);
+    MPF_TEST_AND_PRINT(mpf_add,f1,f2,f3);
+    MPF_TEST_AND_PRINT(mpf_sub,f3,f2,f4);
+    MPF_TEST_AND_PRINT_UI(mpf_div_ui,f1,10,f5);
+    mp_exp_t ee;
+    mpf_get_d_2exp(&ee, f4);
+    printf("mpf_get_d_2exp(%f)=%ld\n",mpf_get_d(f4),(long)ee);
+    printf("mpf_cmp_d(%f,%ld)=%ld\n",mpf_get_d(f4),10L,(long)mpf_cmp_d(f4,10L));
+    printf("mpf_cmp_d(%f,%ld)=%ld\n",mpf_get_d(f4),310L,(long)mpf_cmp_d(f4,310L));
+    MPF_TEST_AND_PRINT(mpf_mul,f2,f5,f6);
+    MPF_TEST_AND_PRINT(mpf_div,f2,f5,f7);
+#if 0
+	char sBuf[3600]; sBuf[0] = 0;
+    double d1,d2,d3,d4,d5,d6,d7;
 
 	d1 = mpf_get_d(f1); 
     mpf_mul_ui(f2, f1, 10);//f2=f1*10,1234.56
+    printf("%s(%f,%f)=%f\n",fnName,(double)(src1),(double)(src2),(double)(result));
     d2 = mpf_get_d(f2);
     mpf_add(f3,f2,f1);//f3=f2+f1,1358.016
     d3 = mpf_get_d(f3);
@@ -61,8 +76,10 @@ int main()
     d3=fabs(d1)-fabs(d2);
     b=(d3<EPSILON);
 	//i=IsCUDA_Supported(1);
-	printf("Host-->MPIR sizes:sizeof(mp_limb_t)=%d,sizeof(mp_limb_signed_t)=%d,sizeof(mp_size_t)=%d,sizeof(mp_exp_t)=%d\n", sizeof(mp_limb_t), sizeof(mp_limb_signed_t), sizeof(mp_size_t), sizeof(mp_exp_t));
-	sayhello(); getch();
+	printf("Host-->MPIR sizes:sizeof(mp_limb_t)=%d,sizeof(mp_limb_signed_t)=%d,sizeof(mp_size_t)=%d,sizeof(mp_exp_t)=%d\n", (int)sizeof(mp_limb_t), (int)sizeof(mp_limb_signed_t), (int)sizeof(mp_size_t), (int)sizeof(mp_exp_t));
+
+    #endif
+    sayhello();
     return i;
 }
 double MPIRWorking_HOST(double fStartValue)

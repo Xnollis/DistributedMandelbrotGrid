@@ -309,6 +309,7 @@ mpn_tdiv_qr (mp_ptr qp, mp_ptr rp, mp_size_t qxn,
 		      ++rn;
 		    }
 		}
+    REMOVE_WARNINGS_OF_LOCAL_VAR(dummy);
 	    }
 
 	    quotient_too_large = 0;

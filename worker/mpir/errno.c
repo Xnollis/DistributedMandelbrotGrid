@@ -29,7 +29,7 @@ MA 02110-1301, USA. */
 #ifdef MPIR_CUDA_ACC
 __GMP_DECLSPEC int gmp_errnod = 0;
 __GMP_DECLSPEC const int __gmpd_0 = 10;
-__GMP_DECLSPEC int __gmp_junkd = 0;
+__GMP_DECLSPEC int __gmp_junkd = 0; 
 __GMP_DECLSPEC
 void
 __gmp_exception(int error_bit)

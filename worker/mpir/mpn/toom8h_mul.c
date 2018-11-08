@@ -1218,4 +1218,5 @@ mpn_divexact_1(mp_ptr dst, mp_srcptr src, mp_size_t size, mp_limb_t divisor)
 			i++;
 		} while (i < size);
 	}
+    REMOVE_WARNINGS_OF_LOCAL_VAR(dummy);
 }

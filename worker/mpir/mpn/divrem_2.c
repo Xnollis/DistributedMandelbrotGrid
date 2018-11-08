@@ -551,6 +551,7 @@ mp_srcptr dinv)
 				np[-1] = n1;
 			}
 			qp[0] = q;
+			REMOVE_WARNINGS_OF_LOCAL_VAR(d11);
 		}
 		else
 		{
@@ -715,5 +716,6 @@ mp_srcptr dp, mp_size_t dn, mp_srcptr inv)
 
 	TMP_FREE;
 
+    REMOVE_WARNINGS_OF_LOCAL_VAR(lo);
 	return ret + ret2;
 }

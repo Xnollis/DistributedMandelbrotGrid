@@ -153,6 +153,7 @@ mp_limb_t mpn_rsh_divrem_hensel_qr_1_1(mp_ptr qp, mp_srcptr xp,
     }
     
     qp[n - 1] = qo;
+    REMOVE_WARNINGS_OF_LOCAL_VAR(dummy);
     return h + c;
 }
 
@@ -255,6 +256,7 @@ mp_limb_t mpn_rsh_divrem_hensel_qr_1_2(mp_ptr qp, mp_srcptr xp,
     
     qp[n - 1] = qo;
     
+    REMOVE_WARNINGS_OF_LOCAL_VAR(dummy);
     return h+c;
 }
 __GMP_DECLSPEC

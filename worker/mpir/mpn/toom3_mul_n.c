@@ -244,6 +244,7 @@ mpn_toom3_mul_n (mp_ptr c, mp_srcptr a, mp_srcptr b, mp_size_t n, mp_ptr t)
 
   mpn_toom3_interpolate (c, c2, v2, t, vinf, k, rr2, sa, vinf0, t4+2);
 
+    REMOVE_WARNINGS_OF_LOCAL_VAR(kk1);
 #undef v2
 #undef vinf
 }
@@ -383,6 +384,8 @@ mpn_toom3_sqr_n (mp_ptr c, mp_srcptr a, mp_size_t n, mp_ptr t)
 
   mpn_toom3_interpolate (c, c2, v2, t, vinf, k, rr2, 1, vinf0, t4+2);
 
+    REMOVE_WARNINGS_OF_LOCAL_VAR(kk1);
+    REMOVE_WARNINGS_OF_LOCAL_VAR(c5);
 #undef v2
 #undef vinf
 }

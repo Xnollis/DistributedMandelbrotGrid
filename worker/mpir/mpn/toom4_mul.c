@@ -301,6 +301,9 @@ mpn_toom4_mul (mp_ptr rp, mp_srcptr up, mp_size_t un,
    }
 
    TMP_FREE;
+   REMOVE_WARNINGS_OF_LOCAL_VAR(n2);
+   REMOVE_WARNINGS_OF_LOCAL_VAR(n3);
+   REMOVE_WARNINGS_OF_LOCAL_VAR(n7);
 }
 
 /* Multiply {up, un} by {vp, vn} and write the result to
@@ -430,7 +433,7 @@ mpn_toom53_mul (mp_ptr rp, mp_srcptr up, mp_size_t un,
 	  MPN_ZERO((rp + rpn), un + vn - rpn);
    }
 
-   TMP_FREE(tp);//__GMP_FREE_FUNC_LIMBS (tp, 4*t4 + 4*(sn+1));
+   TMP_FREE_P(tp);//__GMP_FREE_FUNC_LIMBS (tp, 4*t4 + 4*(sn+1));
 }
 
 /*

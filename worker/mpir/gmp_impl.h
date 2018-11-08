@@ -10,8 +10,8 @@ enum
     GMP_ERROR_SQRT_OF_NEGATIVE = 4,
     GMP_ERROR_INVALID_ARGUMENT = 8
 };
-__GMP_DECLSPEC_G_VALUE extern int __gmp_junk;
-__GMP_DECLSPEC_G_VALUE extern const int __gmp_0;
+//__GMP_DECLSPEC_G_VALUE extern int __gmp_junk;
+//__GMP_DECLSPEC_G_VALUE extern int __gmp_0;
 __GMP_DECLSPEC void __gmp_exception  (int) ;
 __GMP_DECLSPEC void __gmp_divide_by_zero  (void) ;
 __GMP_DECLSPEC void __gmp_sqrt_of_negative  (void) ;
@@ -576,6 +576,7 @@ __src--;                                        \
 #define TMP_BALLOC(n)        TMP_ALLOC(n)
 #define TMP_MARK
 #define TMP_FREE
+#define TMP_FREE_P(p)
 #define TMP_SDECL TMP_DECL
 #define TMP_SMARK TMP_MARK
 #define TMP_SFREE TMP_FREE
@@ -594,10 +595,10 @@ __GMP_DECLSPEC void *TMP_ALLOC_FUNC(size_t n, char pLocalBuf[TMP_ALLOC_LOCAL_BUF
 
 
 /* Enhancement: __gmp_allocate_func could have "__attribute__ ((malloc))",
-but current gcc (3.0) doesn't seem to support that.  */
+but current gcc (3.0) doesn't seem to support that. 
 __GMP_DECLSPEC extern void * (*__gmp_allocate_func) (size_t);
 __GMP_DECLSPEC extern void * (*__gmp_reallocate_func) (void *, size_t, size_t);
-__GMP_DECLSPEC extern void(*__gmp_free_func) (void *, size_t);
+__GMP_DECLSPEC extern void(*__gmp_free_func) (void *, size_t); */
 
 __GMP_DECLSPEC void *__gmp_default_allocate (size_t);
 __GMP_DECLSPEC void *__gmp_default_reallocate (void *, size_t, size_t);
@@ -615,5 +616,5 @@ __GMP_DECLSPEC void __gmp_default_free (void *, size_t);
 #define __GMP_FREE_FUNC_TYPE(p,n,type) (*__gmp_free_func) (p, (n) * sizeof (type))
 #define __GMP_FREE_FUNC_LIMBS(p,n)     __GMP_FREE_FUNC_TYPE (p, n, mp_limb_t)
 
-
+#define REMOVE_WARNINGS_OF_LOCAL_VAR(x) do{x=0;++x;}while(0)
 #endif//__GMP_IMPL_H__

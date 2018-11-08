@@ -119,8 +119,8 @@ mpn_get_d (mp_srcptr ptr, mp_size_t size, mp_size_t sign, long exp)
     {
       goto ieee_infinity;
 
-      /* generic */
-      exp = LONG_MAX;
+      /* generic 
+      exp = LONG_MAX;*/
     }
   else
     {

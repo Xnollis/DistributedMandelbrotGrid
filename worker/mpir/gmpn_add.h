@@ -224,7 +224,7 @@ do {                                          \
 mp_limb_t dummy=0;                            \
 ASSERT ((xl) != 0);                         \
 udiv_qrnnd (invxl, dummy, ~(xl), ~CNST_LIMB(0), xl);  \
-} while (0)
+dummy++;} while (0)
 #endif
 
 
@@ -739,7 +739,7 @@ declaring their operand sizes, then remove the former.  This is purely
 for the benefit of assertion checking.  */
 
 /* Dummy for non-gcc, code involving it will go dead. */
-#if ! defined (__GNUC__) || __GNUC__ < 2
+#if ! defined (__GNUC__) || __GNUC__ < 2 || defined(MPIR_CUDA_ACC)
 #define __builtin_constant_p(x)   0
 #endif
 #if GMP_NAIL_BITS == 0

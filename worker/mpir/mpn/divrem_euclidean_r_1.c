@@ -59,6 +59,7 @@ mp_limb_t mpn_mod_1_1_wrap(mp_srcptr xp, mp_size_t xn, mp_limb_t d)
 
    udiv_qrnnd_preinv(dummy, ret, (sh<<c) | ((sl>>(GMP_LIMB_BITS - 1 - c))>>1), sl<<c, ds, i);
 
+   REMOVE_WARNINGS_OF_LOCAL_VAR(dummy);
    return ret>>c;
 }
 
@@ -101,6 +102,7 @@ mp_limb_t mpn_mod_1_2_wrap(mp_srcptr xp, mp_size_t xn, mp_limb_t d)
 
    udiv_qrnnd_preinv(dummy, ret, (h<<c) | ((l>>(GMP_LIMB_BITS - 1 - c))>>1), l<<c, ds, i);
 
+   REMOVE_WARNINGS_OF_LOCAL_VAR(dummy);
    return ret>>c;
 }
 
@@ -145,6 +147,7 @@ mp_limb_t mpn_mod_1_3_wrap(mp_srcptr xp, mp_size_t xn, mp_limb_t d)
 
    udiv_qrnnd_preinv(dummy, ret, (h<<c) | ((l>>(GMP_LIMB_BITS - 1 - c))>>1), l<<c, ds, i);
 
+   REMOVE_WARNINGS_OF_LOCAL_VAR(dummy);
    return ret>>c;
 }
 
@@ -235,6 +238,7 @@ mp_limb_t mpn_mod_1_k(mp_srcptr xp, mp_size_t xn, mp_limb_t d, mp_size_t k)
 
    udiv_qrnnd_preinv(dummy, ret, (h<<c) | (l>>(GMP_LIMB_BITS - c)), l<<c, ds, i);
 
+    REMOVE_WARNINGS_OF_LOCAL_VAR(dummy);
    return ret>>c;
 }
 #ifndef udiv_inverse
@@ -347,6 +351,7 @@ mp_limb_t mpn_divrem_euclidean_r_1(mp_srcptr xp, mp_size_t n, mp_limb_t d)
 
    r>>=s;
 
+   REMOVE_WARNINGS_OF_LOCAL_VAR(q);
    return r;
 }    
 #undef STORE_QUOTIENT

@@ -411,6 +411,7 @@ mpn_toom3_mul (mp_ptr c, mp_srcptr a, mp_size_t an, mp_srcptr b, mp_size_t bn, m
 
 #undef v2
 #undef vinf
+REMOVE_WARNINGS_OF_LOCAL_VAR(kk1);
 }
 
 __GMP_DECLSPEC
@@ -606,6 +607,7 @@ mpn_toom42_mul (mp_ptr c, mp_srcptr a, mp_size_t an,
 
 #undef v2
 #undef vinf
+REMOVE_WARNINGS_OF_LOCAL_VAR(kk1);
 }
 
 /*
@@ -811,6 +813,8 @@ mpn_toom32_mul (mp_ptr c, mp_srcptr a, mp_size_t an,
 	  cy = mpn_sub_n(c2, c2, t, twok);
      mpn_sub_1(c4, c4, rr2 + k - twok, cy);
   }
+  REMOVE_WARNINGS_OF_LOCAL_VAR(c5);
+  REMOVE_WARNINGS_OF_LOCAL_VAR(t4);
 }
 
 
@@ -842,6 +846,7 @@ mp_limb_t mpn_divexact_by3c(mp_ptr qp, mp_srcptr xp, mp_size_t n, mp_limb_t ci)
 	}
 
 	/* return next quotient*(-3) */
-
-	return acc*(-3);
+  acc*=3;
+  acc*=(-1);
+	return acc;
 }

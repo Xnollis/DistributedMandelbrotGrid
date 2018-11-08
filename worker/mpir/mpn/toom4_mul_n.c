@@ -428,10 +428,14 @@ void tc4_copy (mp_ptr yp, mp_size_t * yn, mp_size_t offset, mp_srcptr xp, mp_siz
       {
           cy = mpn_add_n (yp + offset, yp + offset, xp, xu);
           if (offset + xu < yu)
-            cy = mpn_add_1 (yp + offset + xu, yp + offset + xu,
-                            yu - (offset + xu), cy);
-      } else
+          {
+            cy = mpn_add_1 (yp + offset + xu, yp + offset + xu,yu - (offset + xu), cy);
+          }
+      }
+      else
+      {
         cy = mpn_add_n (yp + offset, yp + offset, xp, yu - offset);
+      }
       /* now cy is the carry at yp + yu */
       if (xu + offset > yu) /* high part of x exceeds y */
       {
@@ -738,6 +742,9 @@ mpn_toom4_mul_n (mp_ptr rp, mp_srcptr up,
    }
 
    TMP_FREE;
+   REMOVE_WARNINGS_OF_LOCAL_VAR(n2);
+   REMOVE_WARNINGS_OF_LOCAL_VAR(n3);
+   REMOVE_WARNINGS_OF_LOCAL_VAR(n7);
 }
 
 /* Square {up, n} and write the result to {prodp, 2n}.
@@ -833,7 +840,7 @@ mpn_toom4_sqr_n (mp_ptr rp, mp_srcptr up, mp_size_t n)
 		MPN_ZERO((rp + rpn), 2*n - rpn);
 	}
 
-	TMP_FREE(tp);//__GMP_FREE_FUNC_LIMBS (tp, 4*t4 + 4*(sn+1));
+	TMP_FREE_P(tp);//__GMP_FREE_FUNC_LIMBS (tp, 4*t4 + 4*(sn+1));
 }
 
 /*

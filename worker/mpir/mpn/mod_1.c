@@ -52,14 +52,14 @@ MA 02110-1301, USA. */
 #if 1
 __GMP_DECLSPEC
 mp_limb_t
-mpn_mod_1 (mp_srcptr up, mp_size_t un, mp_limb_t d)
+mpn_mod_1(mp_srcptr up, mp_size_t un, mp_limb_t d)
 {
-  mp_size_t  i;
-  mp_limb_t  n1, n0, r;
-  mp_limb_t  dummy;
-
-  ASSERT (un >= 0);
-  ASSERT (d != 0);
+  mp_size_t i;
+  mp_limb_t n1, n0, r;
+  mp_limb_t dummy;
+  dummy = 0;
+  ASSERT(un >= 0);
+  ASSERT(d != 0);
 
   /* Botch: Should this be handled at all?  Rely on callers?
      But note un==0 is currently required by mpz/fdiv_r_ui.c and possibly
@@ -67,112 +67,111 @@ mpn_mod_1 (mp_srcptr up, mp_size_t un, mp_limb_t d)
   if (un == 0)
     return 0;
 
-  #if HAVE_NATIVE_mpn_divrem_euclidean_r_1
-  return mpn_divrem_euclidean_r_1(up,un,d);
-  #endif
+#if HAVE_NATIVE_mpn_divrem_euclidean_r_1
+  return mpn_divrem_euclidean_r_1(up, un, d);
+#endif
 
   d <<= GMP_NAIL_BITS;
 
   if ((d & GMP_LIMB_HIGHBIT) != 0)
-    {
-      /* High limb is initial remainder, possibly with one subtract of
+  {
+    /* High limb is initial remainder, possibly with one subtract of
 	 d to get r<d.  */
-      r = up[un - 1] << GMP_NAIL_BITS;
-      if (r >= d)
-	r -= d;
+    r = up[un - 1] << GMP_NAIL_BITS;
+    if (r >= d)
+      r -= d;
+    r >>= GMP_NAIL_BITS;
+    un--;
+    if (un == 0)
+      return r;
+
+    if (BELOW_THRESHOLD(un, MOD_1_NORM_THRESHOLD))
+    {
+    plain:
+      for (i = un - 1; i >= 0; i--)
+      {
+        n0 = up[i] << GMP_NAIL_BITS;
+        udiv_qrnnd(dummy, r, r, n0, d);
+        r >>= GMP_NAIL_BITS;
+      }
+      return r;
+    }
+    else
+    {
+      mp_limb_t inv;
+      invert_limb(inv, d);
+      for (i = un - 1; i >= 0; i--)
+      {
+        n0 = up[i] << GMP_NAIL_BITS;
+        udiv_qrnnd_preinv(dummy, r, r, n0, d, inv);
+        r >>= GMP_NAIL_BITS;
+      }
+      return r;
+    }
+  }
+  else
+  {
+    int norm;
+
+    /* Skip a division if high < divisor.  Having the test here before
+	 normalizing will still skip as often as possible.  */
+    r = up[un - 1] << GMP_NAIL_BITS;
+    if (r < d)
+    {
       r >>= GMP_NAIL_BITS;
       un--;
       if (un == 0)
-	return r;
-
-      if (BELOW_THRESHOLD (un, MOD_1_NORM_THRESHOLD))
-	{
-	plain:
-	  for (i = un - 1; i >= 0; i--)
-	    {
-	      n0 = up[i] << GMP_NAIL_BITS;
-	      udiv_qrnnd (dummy, r, r, n0, d);
-	      r >>= GMP_NAIL_BITS;
-	    }
-	  return r;
-	}
-      else
-	{
-	  mp_limb_t  inv;
-	  invert_limb (inv, d);
-	  for (i = un - 1; i >= 0; i--)
-	    {
-	      n0 = up[i] << GMP_NAIL_BITS;
-	      udiv_qrnnd_preinv (dummy, r, r, n0, d, inv);
-	      r >>= GMP_NAIL_BITS;
-	    }
-	  return r;
-	}
+        return r;
     }
-  else
-    {
-      int norm;
+    else
+      r = 0;
 
-      /* Skip a division if high < divisor.  Having the test here before
-	 normalizing will still skip as often as possible.  */
-      r = up[un - 1] << GMP_NAIL_BITS;
-      if (r < d)
-	{
-	  r >>= GMP_NAIL_BITS;
-	  un--;
-	  if (un == 0)
-	    return r;
-	}
-      else
-	r = 0;
-
-      /* If udiv_qrnnd doesn't need a normalized divisor, can use the simple
+    /* If udiv_qrnnd doesn't need a normalized divisor, can use the simple
 	 code above. */
-      if (! UDIV_NEEDS_NORMALIZATION
-	  && BELOW_THRESHOLD (un, MOD_1_UNNORM_THRESHOLD))
-	goto plain;
+    if (!UDIV_NEEDS_NORMALIZATION && BELOW_THRESHOLD(un, MOD_1_UNNORM_THRESHOLD))
+      goto plain;
 
-      count_leading_zeros (norm, d);
-      d <<= norm;
+    count_leading_zeros(norm, d);
+    d <<= norm;
 
-      n1 = up[un - 1] << GMP_NAIL_BITS;
-      r = (r << norm) | (n1 >> (GMP_LIMB_BITS - norm));
+    n1 = up[un - 1] << GMP_NAIL_BITS;
+    r = (r << norm) | (n1 >> (GMP_LIMB_BITS - norm));
 
-      if (UDIV_NEEDS_NORMALIZATION
-	  && BELOW_THRESHOLD (un, MOD_1_UNNORM_THRESHOLD))
-	{
-	  for (i = un - 2; i >= 0; i--)
-	    {
-	      n0 = up[i] << GMP_NAIL_BITS;
-	      udiv_qrnnd (dummy, r, r,
-			  (n1 << norm) | (n0 >> (GMP_NUMB_BITS - norm)),
-			  d);
-	      r >>= GMP_NAIL_BITS;
-	      n1 = n0;
-	    }
-	  udiv_qrnnd (dummy, r, r, n1 << norm, d);
-	  r >>= GMP_NAIL_BITS;
-	  return r >> norm;
-	}
-      else
-	{
-	  mp_limb_t inv;
-	  invert_limb (inv, d);
-
-	  for (i = un - 2; i >= 0; i--)
-	    {
-	      n0 = up[i] << GMP_NAIL_BITS;
-	      udiv_qrnnd_preinv (dummy, r, r,
-				 (n1 << norm) | (n0 >> (GMP_NUMB_BITS - norm)),
-				 d, inv);
-	      r >>= GMP_NAIL_BITS;
-	      n1 = n0;
-	    }
-	  udiv_qrnnd_preinv (dummy, r, r, n1 << norm, d, inv);
-	  r >>= GMP_NAIL_BITS;
-	  return r >> norm;
-	}
+    if (UDIV_NEEDS_NORMALIZATION && BELOW_THRESHOLD(un, MOD_1_UNNORM_THRESHOLD))
+    {
+      for (i = un - 2; i >= 0; i--)
+      {
+        n0 = up[i] << GMP_NAIL_BITS;
+        udiv_qrnnd(dummy, r, r,
+                   (n1 << norm) | (n0 >> (GMP_NUMB_BITS - norm)),
+                   d);
+        r >>= GMP_NAIL_BITS;
+        n1 = n0;
+      }
+      udiv_qrnnd(dummy, r, r, n1 << norm, d);
+      r >>= GMP_NAIL_BITS;
+      return r >> norm;
     }
+    else
+    {
+      mp_limb_t inv;
+      invert_limb(inv, d);
+
+      for (i = un - 2; i >= 0; i--)
+      {
+        n0 = up[i] << GMP_NAIL_BITS;
+        udiv_qrnnd_preinv(dummy, r, r,
+                          (n1 << norm) | (n0 >> (GMP_NUMB_BITS - norm)),
+                          d, inv);
+        r >>= GMP_NAIL_BITS;
+        n1 = n0;
+      }
+      udiv_qrnnd_preinv(dummy, r, r, n1 << norm, d, inv);
+      r >>= GMP_NAIL_BITS;
+      REMOVE_WARNINGS_OF_LOCAL_VAR(dummy);
+      return r >> norm;
+    }
+  }
 }
 #endif
 /* in each round we remove one limb from the body, i.e. k = 1 */
